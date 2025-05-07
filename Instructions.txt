@@ -1,0 +1,13 @@
+1. Create a directory MilitaryServices
+2. Download in this directory the MilitaryServicesFrontend,
+the MilitaryServicesBackend, the docker-compose.yml file and
+the init.sql file from my GitHub account.
+3. Install Docker Desktop and open it.
+4. Click terminal in docker.desktop app and cd to the MilitaryServices 
+directory that contain the MilitaryServicesFrontend,the MilitaryServicesBackend,the docker-compose.yml file and the init.sql
+5. Run the following command in the terminal to build and start the three containers:
+docker-compose up --build
+6.After the containers have started run the following command in the terminal
+to connect to the container db with the ms schema:
+docker exec -it db psql -U postgres -d militaryServices
+7.Run the insert queries of the init.sql file. Just copy them all paste them in the command line and click enter.
