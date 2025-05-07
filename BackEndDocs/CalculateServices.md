@@ -72,4 +72,56 @@ assigned. So in the numberOfOutgoing variable i have this number.
 
     Here i have two possible cases. The one case is that the number of armed soldiers minus the number of armed services is less than the value
 assigned to the numberOfOutgoing variable. In this case i can not set to free of duty  number os armed soldiers equal with numberOfOutgoing. As 
-we discussed in the first paragraph the number of armed soldiers must be at least equal with the number of armed servicesThe
+we discussed in the first paragraph the number of armed soldiers must be at least equal with the number of armed services. The other case is that
+the number of armed soldiers is greater than this difference so i can set to free of duty numberOfOutgoing soldiers. i use the boolean flag so that
+in case the difference is greater than the numberOfOutgoing then the next block will not be executed. Why it will be executed without this flag ?
+The answer is that when i assign to a soldier a service or a free of duty situation then i remove him from the set. So the size of both sets is not
+the same when the conditions in the second if are executed and the conclusion is not correct and it leads to a bug. If you want you can comment out
+the flag variable and see the results. The reason why i remove the soldier from the set is that my job has finished when the size of them is zero. Then
+a service is assigned to all of them. Of course i will give the queries in the database with aggregation functions that shows the results after 300 or 500
+or any calculations in order any tester to see that the number of services assigned to each soldier after so many calculations are +-1 from the mean.
+Here i imply that it is not enough just to assign services to the soldier but the algoirthm must assigns them fairly. As we discussed in the first 
+paragraph the armed services are very hard in comparison with the unarmed ones and the free of duty days must be shared too as they are days for rest.
+But the scenario must have a unit that all soldiers started at the same day and not soldiers started months later as in this case there will be soldiers
+with much more services totally and the reason will not be that the algorithm is not fair but the fact that the one has served much more days. Here probably
+it is clear why i chose the proportions solution and not just to count the number of services. If i had chose the number of services then the soldiers with
+300 days served would be every day free of duty as they will have much more services due to their total number in the army. 
+
+    The getProportions method does what i have already explained in the first paragraph. I will explain in detail the file that contains this method
+in the CountServicesForEachSold.md file. Then the calculateNumberOfOutgoing method is called to get the total number of outgoing soldiers and then in 
+this block the assignAsOutgoingBasedOnProp method is called. Here it calls the Collections.sort method and it sorts in descending order the objects of this
+list based on the float number we discussed in the first paragraph. Then it just iterate the proprtionsList and sets as free of duty the soldiers starting from
+the index 0 and decrement the variable by 1 in each rep. When the variable is equal with 0 it just returns. Now the number of soldiers is equal with the number
+of services in the data structures totally. The other case is actually a rare one as a unit has a lot of soldiers (much more than the number of services)
+However i gave a solution and implement it for this case too so that the algorithm runs correctly for any case. In case that the difference of armed soldiers
+with armed services is less than the number of outgoing soldiers the corresponding block to these conditions is executed. At first it calculates the maximum
+number of armed soldiers that can set to free of duty. It arises from the difference between the armed soldiers and the armed services. Then it calls the
+getProportions method and for the armed soldiers. I will explain this method in the file i mentioned above. What is done here is that after it gets the proportions
+list for the armed soldiers it calls the calculateOutgoingInRareCase method and it sets with the same criteria as free of duty armed soliders equal with the 
+maximum calculated number of armed soldiers that can be set to free of duty. The armed soldiers has a priority an that's why this happens as they have the 
+heaviest load. Then i have to give the remaining days out to the unarmed soldiers and the same methods are called in this block for them too.
+
+    Now the number of soldiers is equal with the number of services totally in the data structures in both two possible cases. The next subproblem to
+be solved is to assign the unarmed services to unarmed soldiers. And why this first ? The reason why is that by the definition of the problem the armed
+soldiers can be assigned any service of both categories while the unarmed soldiers can be assigned only unarmed services. It means that if i start with the
+armed services and assign them to armed soldiers the numbers after 300 days will not be +=1 and i mean the total number of armed and unarmed services assigned
+to armed soldiers as described above. If you think of it in this point the algorithm has not the knowledge of the remaining unarmed services so that assign them
+to the most tires soldiers and we discussed in the first paragraph the most tired ones are those ones with the worst proportion. The calculateServicesForUnarmedSoldiers
+is called now and randomly an unarmed service is selected from the ordered list with the unarmed services and then it is assgned to an unarmed soldier. After this block
+is executed in the unarmedServices list have remained only the rest unarmed services. Of course the size of this list can be zero in case that the unarmed services is 
+equal with the number of unarmed soldiers. The method returns and that't why i have a check to avoid the call of the method setUnarmedServicesToArmedSoldiers in this
+case. 
+
+    The method setUnarmedServicesToArmedSoldiers solves the next subproblem which is as its name describes to assign the remaining unarmed services to 
+armed soldiers as all of the services have to be assigned. The getHistoricalDataDesc is responsible to get in descending order the number of armed services
+that the armed soldiers have served until now. The query it runs is a group by query with aggregation function count in order to count them and desc. The 
+where clause has a condition for the unit for the discharged in order to select only the soldiers that serve at the moment of the calculation in the unit and 
+not discharged ones and the armed column in order to filter the armed services. It is actually an inner join query as the services as i have already explained
+are in the servcies table and the servcies table has a foreign keu which is the pk of the table soldiers. The group by is done by the soldier id as we have to 
+count here the armed services of each soldier. The method just iterates the historicalData list and assigns the remaining unarmed services to the soldiers
+with the most armed services until now. The addTheRestOnes method has a purpose in case we have soldiers that are new in the unit and they have served zero
+armed services and it means that the inner join query wil not retrieve them from the database. 
+
+    The calculateServicesForArmedSoldiers method solves the last subproblem which is to assign the armed services to the armed soldiers. This method
+just has to iterate the armed soldiers and choose randomly one the armed services and assign it to him. Now we reached to the last subproblem we have 
+to solve which is to set the correct date and unit of the new calculation. Then the method returns the allSoldiers data structure.
