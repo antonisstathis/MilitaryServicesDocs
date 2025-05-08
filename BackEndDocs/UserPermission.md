@@ -1,4 +1,4 @@
-The methods of the java file UserPermission is used for an extra check except for the jwt token so that i can 
+The methods of the java file UserPermission are used for an extra check except for the jwt token so that i can 
 check if the requested row belongs to the user. In order to do so i use the schema in this mechanism. The user 
 table has a foreign key which is the pk of the table soldiers and the table soldiers has a foreign key which 
 is the primary key of the table unit and this way i can know with 100 per cent probability the unit of the user. Now any data
