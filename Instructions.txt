@@ -11,3 +11,6 @@ docker-compose up --build
 to connect to the container db with the ms schema:
 docker exec -it db psql -U postgres -d militaryServices
 7.Run the insert queries of the init_en.sql file. Just copy them all paste them in the command line and click enter.
+
+The password to test locally is test123 and is encrypted but i give the password here as it is just used to test locally.
+You can produce a new one with bcrypt and update the row in the user table.
