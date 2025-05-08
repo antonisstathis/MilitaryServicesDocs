@@ -111,7 +111,7 @@ SELECT setval('ms.services_ser_id_seq', (SELECT MAX(ser_id) FROM ms.services));
 
 INSERT INTO ms."user"
 (username, enabled, "password", soldier_id)
-VALUES('gpapathanasiou', true, '$2a$10$ydzH9a8N9NA0QhSOHatmgeLT5FXz9LfXWNDTsLHxTssW7O9xJl7KG', 13);
+VALUES('gpapathanasiou', true, '$2a$10$ydzH9a8N9NA0QhSOHatmgeLT5FXz9LfXWNDTsLHxTssW7O9xJl7KG', 2);
 
 INSERT INTO ms.authority
 (auth_id, authority, username)
