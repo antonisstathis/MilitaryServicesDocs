@@ -15,4 +15,4 @@ docker exec -it db psql -U postgres -d militaryServices
 The password to test locally is test123 and is encrypted but i give the password here as it is just used to test locally.
 You can produce a new one with bcrypt and update the row in the user table.
 In addition uncomment the lines 6,7 in the application.properties file just for the first run as it will delete the data of
-the tables in the next ones. The hibernate will create automaticlly the schema and the tables.
+the tables in the next ones. The hibernate will create automatically the schema and the tables.
