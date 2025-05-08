@@ -10,4 +10,4 @@ docker-compose up --build
 6.After the containers have started run the following command in the terminal
 to connect to the container db with the ms schema:
 docker exec -it db psql -U postgres -d militaryServices
-7.Run the insert queries of the init.sql file. Just copy them all paste them in the command line and click enter.
+7.Run the insert queries of the init_en.sql file. Just copy them all paste them in the command line and click enter.
