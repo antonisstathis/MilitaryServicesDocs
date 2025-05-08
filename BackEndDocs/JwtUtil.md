@@ -1,4 +1,4 @@
-In this file i have the methods to create the jwt token, to validate it in each request and to extract the username
+In the JwtUtil java file i have the methods to create the jwt token, to validate it in each request and to extract the username
 in each request. I use a private and a public key for this purpose and the RSA algorithm. The keys are stored in 2 files
 and read from there when the constructor is called.
 
