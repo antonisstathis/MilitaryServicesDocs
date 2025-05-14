@@ -56,6 +56,9 @@ VALUES(15, 'active', 'Evaggelos', 'unarmed', 'Mitropoulos', 1, '1', 'EMT1725', f
 INSERT INTO ms.soldiers
 (sold_id, active, "name", situation, surname, unit_id, company, soldier_registration_number, discharged,patronymic,matronymic,mobile_phone,city,address)
 VALUES(16, 'active', 'Athanasios', 'unarmed', 'Fotiadis', 1, '1', 'AFT9271', false,'Zacharias','Aggeliki','6906752541','Thessaloniki','Thasou 78');
+INSERT INTO ms.soldiers
+(discharged, sold_id, unit_id, "name", surname, active, address, city, company, matronymic, mobile_phone, patronymic, situation, soldier_registration_number)
+VALUES(true, 17, 1, 'Giorgos', 'Fotiou', 'active', 'Korinthou 25', 'Argos', '1', 'Aggeliki', '6903287125', 'Dimitrios', 'armed', 'IFOT1872');
 SELECT setval('ms.soldiers_sold_id_seq', (SELECT MAX(sold_id) FROM ms.soldiers));
 
 INSERT INTO ms.services
@@ -112,10 +115,20 @@ SELECT setval('ms.services_ser_id_seq', (SELECT MAX(ser_id) FROM ms.services));
 INSERT INTO ms."user"
 (username, enabled, "password", soldier_id)
 VALUES('gpapathanasiou', true, '$2a$10$ydzH9a8N9NA0QhSOHatmgeLT5FXz9LfXWNDTsLHxTssW7O9xJl7KG', 2);
+INSERT INTO ms."user"
+(enabled, soldier_id, "password", username)
+VALUES(true, 17, '$2a$10$ydzH9a8N9NA0QhSOHatmgeLT5FXz9LfXWNDTsLHxTssW7O9xJl7KG', 'gfotiou');
 
 INSERT INTO ms.authority
 (auth_id, authority, username)
 VALUES(1, 'soldier', 'gpapathanasiou');
+SELECT setval('ms.authority_auth_id_seq', (SELECT MAX(auth_id) FROM ms.authority));
+INSERT INTO ms.authority
+(auth_id, authority, username)
+VALUES(2, 'soldier', 'gfotiou');
+INSERT INTO ms.authority
+(auth_id, authority, username)
+VALUES(3, 'commander', 'gfotiou');
 SELECT setval('ms.authority_auth_id_seq', (SELECT MAX(auth_id) FROM ms.authority));
 
 INSERT INTO ms.ser_of_unit
