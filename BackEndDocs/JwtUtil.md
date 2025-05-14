@@ -12,9 +12,9 @@ This is done with the recommended way of spring security. The JwtAuthenticationF
 the doFilterInternal method is called automatically by the framework due to the configuration in the SecurityConfig file. The doFilterInternal
 method is called each time a request is sent to the server and only if it calls this method  filterChain.doFilter(request, response); it proceeds to the
 corresponding block in the controller. In order to reach this line of code and proceed with the endpoint it has to validate the request and pass all
-the checks (check if token is tampered or expired and roles). The next commit will be to add two levels of roles and specifically the role of commander
-will be the second level that some endpoints will be called only if the user has this role too except for the role soldier. In case the username 
-(the pk of the table user) is tampered i will detect it in this block as the private key is not known and the attacker can not produce a valid token 
+the checks (check if token is tampered or expired and roles). The PreAuthorize annotation is applied to all endpoints and the basic role is soldier and
+for the saveNewServices and deleteServices endpoints only the next level authority which is the commander can have access and add or delete services. 
+In case the username (the pk of the table user) is tampered i will detect it in this block as the private key is not known and the attacker can not produce a valid token 
 that will match the one produced in the server.
 
     The isTokenTamperedOrExpired method in this file is the one that checks if the token is tampered or expired. The token has a timestamp
