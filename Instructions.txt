@@ -15,6 +15,8 @@ docker exec -it db psql -U postgres -d militaryServices
 There are two users with the following credentials:
 username: gpapathanasiou, password: test123 (roles: soldier)
 username: gfotiou, password: test123 (roles: soldier,commander) - (This user only can add or delete services from the unit.)
-You can produce a new one with bcrypt and update the row in the user table.
+The user that has the role of commander too can add or delete services from the unit.
+
+You can produce a new password for each user with the bcrypt algorithm and update the corresponding row in the user table.
 In addition uncomment the lines 6,7 in the application.properties file just for the first run as it will delete the data of
 the tables in the next ones. The hibernate will create automatically the schema and the tables.
