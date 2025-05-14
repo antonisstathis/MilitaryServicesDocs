@@ -12,7 +12,9 @@ to connect to the container db with the ms schema:
 docker exec -it db psql -U postgres -d militaryServices
 7.Run the insert queries of the init_en.sql file. Just copy them all and paste them in the command line and click enter.
 
-The password to test locally is test123 and is encrypted but i give the password here as it is just used to test locally.
+There are two users with the following credentials:
+username: gpapathanasiou, password: test123 (roles: soldier)
+username: gfotiou, password: test123 (roles: soldier,commander) - (This user only can add or delete services from the unit.)
 You can produce a new one with bcrypt and update the row in the user table.
 In addition uncomment the lines 6,7 in the application.properties file just for the first run as it will delete the data of
 the tables in the next ones. The hibernate will create automatically the schema and the tables.
