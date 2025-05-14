@@ -14,7 +14,7 @@ docker exec -it db psql -U postgres -d militaryServices
 
 There are two users with the following credentials:
 username: gpapathanasiou, password: test123 (roles: soldier)
-username: gfotiou, password: test123 (roles: soldier,commander) - (This user only can add or delete services from the unit.)
+username: gfotiou, password: test123 (roles: soldier,commander) - (This user only can add or delete services of the unit.)
 The user that has the role of commander too can add or delete services from the unit.
 
 You can produce a new password for each user with the bcrypt algorithm and update the corresponding row in the user table.
