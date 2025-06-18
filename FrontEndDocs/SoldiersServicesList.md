@@ -34,7 +34,7 @@ endpoint of the backend server. After that it calls again the fetchSoldiers meth
 data of the new calculation which is the last one after this event and show them in the table html element.
 
 	When the user clicks the Services Of Unit button then with the use of shorthand @change the method
-navigateTo is called and i pass there the path '/servicesOfUnit' which corresponds to the ServicesOfUnit,vue
+navigateTo is called and i pass there the path '/servicesOfUnit' which corresponds to the ServicesOfUnit.vue
 component. The method navigateTo uses the router so that render the ServicesOfUnit.vue component. This component
 is explained in the ServicesOfUnit.ms file.
 
