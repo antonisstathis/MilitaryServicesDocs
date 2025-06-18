@@ -96,7 +96,7 @@ in the documentation for the backend carries a timestamp and after 5 hours is ex
 	All the requests send the jwt token to the server. This behaviour is defined in the line 25 of the main.js file using axios 
 interceptors.It is not needed to add it in each request as it is applied globally. The spring boot app checks in the controller layer 
 if the jwt token is tampered or expired and responds with the requested data and ok status only in the case that the jwt token is not 
-tampered or expireda. In case the jwt token is tampered or expired the spring boot app responds with 401 status unathorized. The same 
+tampered or expired. In case the jwt token is tampered or expired the spring boot app responds with 401 status unathorized. The same 
 happens with the domain name of the server that hosts the spring boot app. It is not needed to add it in each request as it is added 
 automatically. This behaviour is defined in line 18 of the main.js file. The url is "http://localhost:8080/" as i run the app locally 
 using Docker or else the domain name would be there.
