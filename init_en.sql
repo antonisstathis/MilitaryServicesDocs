@@ -208,7 +208,7 @@ INSERT INTO ms.services
 VALUES(25, '2024-12-17 00:00:00.000', 27, 1, 'armed', '1', 'free of duty', 'out', '',true, 'A');
 INSERT INTO ms.services
 (sold_id, ser_date, ser_id, unit_id, armed, company, description, ser_name, shift, is_personnel, ser_group)
-VALUES(26, '2024-12-17 00:00:00.000', 28, 1, 'armed', '1', 'free of duty', 'out', '',true, 'A');
+VALUES(26, '2024-12-17 00:00:00.000', 28, 1, 'unarmed', '1', 'free of duty', 'out', '',true, 'A');
 INSERT INTO ms.services
 (sold_id, ser_date, ser_id, unit_id, armed, company, description, ser_name, shift, is_personnel, ser_group)
 VALUES(28, '2024-12-17 00:00:00.000', 29, 1, 'unarmed', '1', 'free of duty', 'out', '',true, 'B');
