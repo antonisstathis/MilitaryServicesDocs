@@ -205,25 +205,25 @@ INSERT INTO ms.services
 VALUES(33, '2024-12-17 00:00:00.000', 26, 1, 'armed', '1', 'gate sergeant', 'GSRG', '',true, 'D');
 INSERT INTO ms.services
 (sold_id, ser_date, ser_id, unit_id, armed, company, description, ser_name, shift, is_personnel, ser_group)
-VALUES(25, '2024-12-17 00:00:00.000', 27, 1, 'armed', '1', 'free of duty', 'out', '',true, 'A');
+VALUES(25, '2024-12-17 00:00:00.000', 27, 1, 'free of duty', '1', 'free of duty', 'out', '',true, 'A');
 INSERT INTO ms.services
 (sold_id, ser_date, ser_id, unit_id, armed, company, description, ser_name, shift, is_personnel, ser_group)
-VALUES(26, '2024-12-17 00:00:00.000', 28, 1, 'unarmed', '1', 'free of duty', 'out', '',true, 'A');
+VALUES(26, '2024-12-17 00:00:00.000', 28, 1, 'free of duty', '1', 'free of duty', 'out', '',true, 'A');
 INSERT INTO ms.services
 (sold_id, ser_date, ser_id, unit_id, armed, company, description, ser_name, shift, is_personnel, ser_group)
-VALUES(28, '2024-12-17 00:00:00.000', 29, 1, 'unarmed', '1', 'free of duty', 'out', '',true, 'B');
+VALUES(28, '2024-12-17 00:00:00.000', 29, 1, 'free of duty', '1', 'free of duty', 'out', '',true, 'B');
 INSERT INTO ms.services
 (sold_id, ser_date, ser_id, unit_id, armed, company, description, ser_name, shift, is_personnel, ser_group)
-VALUES(29, '2024-12-17 00:00:00.000', 30, 1, 'unarmed', '1', 'free of duty', 'out', '',true, 'B');
+VALUES(29, '2024-12-17 00:00:00.000', 30, 1, 'free of duty', '1', 'free of duty', 'out', '',true, 'B');
 INSERT INTO ms.services
 (sold_id, ser_date, ser_id, unit_id, armed, company, description, ser_name, shift, is_personnel, ser_group)
-VALUES(31, '2024-12-17 00:00:00.000', 31, 1, 'unarmed', '1', 'free of duty', 'out', '',true, 'C');
+VALUES(31, '2024-12-17 00:00:00.000', 31, 1, 'free of duty', '1', 'free of duty', 'out', '',true, 'C');
 INSERT INTO ms.services
 (sold_id, ser_date, ser_id, unit_id, armed, company, description, ser_name, shift, is_personnel, ser_group)
-VALUES(32, '2024-12-17 00:00:00.000', 32, 1, 'unarmed', '1', 'free of duty', 'out', '',true, 'C');
+VALUES(32, '2024-12-17 00:00:00.000', 32, 1, 'free of duty', '1', 'free of duty', 'out', '',true, 'C');
 INSERT INTO ms.services
 (sold_id, ser_date, ser_id, unit_id, armed, company, description, ser_name, shift, is_personnel, ser_group)
-VALUES(34, '2024-12-17 00:00:00.000', 33, 1, 'unarmed', '1', 'free of duty', 'out', '',true, 'D');
+VALUES(34, '2024-12-17 00:00:00.000', 33, 1, 'free of duty', '1', 'free of duty', 'out', '',true, 'D');
 
 SELECT setval('ms.services_ser_id_seq', (SELECT MAX(ser_id) FROM ms.services));
 
