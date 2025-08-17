@@ -2,11 +2,11 @@
 2. Download in this directory the MilitaryServicesFrontend,
 the MilitaryServicesBackend, the docker-compose.yml file and
 the init.sql file from my GitHub account.
-3. Install Docker Desktop and open it.
-4. Click terminal in docker.desktop app and cd to the MilitaryServices 
-directory that contain the MilitaryServicesFrontend,the MilitaryServicesBackend,the docker-compose.yml file and the init.sql
-5.Uncomment the lines 11,12 in the application.properties file just for the first run as it will delete the data of
+3.Uncomment the lines 11,12 in the application.properties file just for the first run as it will delete the data of
 the tables in the next ones. The hibernate will create automatically the schema and the tables.
+4. Install Docker Desktop and open it.
+5. Click terminal in docker.desktop app and cd to the MilitaryServices 
+directory that contain the MilitaryServicesFrontend,the MilitaryServicesBackend,the docker-compose.yml file and the init.sql
 6. Run the following command in the terminal to build and start the three containers:
 docker-compose up --build
 7.After the containers have started run the following command in the terminal
