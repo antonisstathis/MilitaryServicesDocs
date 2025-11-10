@@ -71,7 +71,7 @@ number is the number of soldiers that must be set to free of duty. The remaining
 assigned. So in the numberOfFreePersonnel variable i have this number.
 
     Here i have two possible cases. The one case is that the number of armed soldiers minus the number of armed services is less than the value
-assigned to the numberOfFreePersonnel variable. In this case i can not set to free of duty  number os armed soldiers equal with numberOfFreePersonnel. As 
+assigned to the numberOfFreePersonnel variable. In this case i can not set to free of duty number of armed soldiers equal with numberOfFreePersonnel. As 
 we discussed in the first paragraph the number of armed soldiers must be at least equal with the number of armed services. The other case is that
 the number of armed soldiers is greater than this difference so i can set to free of duty numberOfFreePersonnel soldiers. i use the boolean flag so that
 in case the difference is greater than the numberOfFreePersonnel then the next block will not be executed. Why it will be executed without this flag ?
@@ -89,7 +89,7 @@ it is clear why i chose the proportions solution and not just to count the numbe
 
     The getProportions method does what i have already explained in the first paragraph. I will explain in detail the file that contains this method
 in the CountServicesForEachSold.md file. Then the calculateNumberOfFreePersonnel method is called to get the total number of free of duty soldiers and then in 
-this block the assignAsOutgoingBasedOnProp method is called. Here it calls the Collections.sort method and it sorts in descending order the objects of this
+this block the computeFreeSoldiers method is called. Here it calls the Collections.sort method and it sorts in descending order the objects of this
 list based on the float number we discussed in the first paragraph. Then it just iterate the proprtionsList and sets as free of duty the soldiers starting from
 the index 0 and decrement the variable by 1 in each rep. When the variable is equal with 0 it just returns. Now the number of soldiers is equal with the number
 of services in the data structures totally. The other case is actually a rare one as a unit has a lot of soldiers (much more than the number of services)
