@@ -88,13 +88,13 @@ it is clear why i chose the proportions solution and not just to count the numbe
 300 days served would be every day free of duty as they will have much more services due to their total number in the army. 
 
     The getProportions method does what i have already explained in the first paragraph. I will explain in detail the file that contains this method
-in the CountServicesForEachSold.md file. Then the calculateNumberOfFreePersonnel method is called to get the total number of outgoing soldiers and then in 
+in the CountServicesForEachSold.md file. Then the calculateNumberOfFreePersonnel method is called to get the total number of free of duty soldiers and then in 
 this block the assignAsOutgoingBasedOnProp method is called. Here it calls the Collections.sort method and it sorts in descending order the objects of this
 list based on the float number we discussed in the first paragraph. Then it just iterate the proprtionsList and sets as free of duty the soldiers starting from
 the index 0 and decrement the variable by 1 in each rep. When the variable is equal with 0 it just returns. Now the number of soldiers is equal with the number
 of services in the data structures totally. The other case is actually a rare one as a unit has a lot of soldiers (much more than the number of services)
 However i gave a solution and implement it for this case too so that the algorithm runs correctly for any case. In case that the difference of armed soldiers
-with armed services is less than the number of outgoing soldiers the corresponding block to these conditions is executed. At first it calculates the maximum
+with armed services is less than the number of free of duty soldiers the corresponding block to these conditions is executed. At first it calculates the maximum
 number of armed soldiers that can set to free of duty. It arises from the difference between the armed soldiers and the armed services. Then it calls the
 getProportions method and for the armed soldiers. I will explain this method in the file i mentioned above. What is done here is that after it gets the proportions
 list for the armed soldiers it calls the calculateOutgoingInRareCase method and it sets with the same criteria as free of duty armed soliders equal with the 
