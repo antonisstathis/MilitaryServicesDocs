@@ -68,13 +68,13 @@ component that does so.
 
     The calculateNumberOfFreePersonnel method is the next one called and just calculates the difference between the soldiers and the services. This
 number is the number of soldiers that must be set to free of duty. The remaining ones will be equal with the number of services that has to be
-assigned. So in the numberOfOutgoing variable i have this number.
+assigned. So in the numberOfFreePersonnel variable i have this number.
 
     Here i have two possible cases. The one case is that the number of armed soldiers minus the number of armed services is less than the value
-assigned to the numberOfOutgoing variable. In this case i can not set to free of duty  number os armed soldiers equal with numberOfOutgoing. As 
+assigned to the numberOfFreePersonnel variable. In this case i can not set to free of duty  number os armed soldiers equal with numberOfFreePersonnel. As 
 we discussed in the first paragraph the number of armed soldiers must be at least equal with the number of armed services. The other case is that
-the number of armed soldiers is greater than this difference so i can set to free of duty numberOfOutgoing soldiers. i use the boolean flag so that
-in case the difference is greater than the numberOfOutgoing then the next block will not be executed. Why it will be executed without this flag ?
+the number of armed soldiers is greater than this difference so i can set to free of duty numberOfFreePersonnel soldiers. i use the boolean flag so that
+in case the difference is greater than the numberOfFreePersonnel then the next block will not be executed. Why it will be executed without this flag ?
 The answer is that when i assign to a soldier a service or a free of duty situation then i remove him from the set. So the size of both sets is not
 the same when the conditions in the second if are executed and the conclusion is not correct and it leads to a bug. If you want you can comment out
 the flag variable and see the results. The reason why i remove the soldier from the set is that my job has finished when the size of them is zero. Then
