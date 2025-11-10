@@ -1,21 +1,29 @@
-In the JwtUtil java file i have the methods to create the jwt token, to validate it in each request and to extract the username
-in each request. I use a private and a public key for this purpose and the RSA algorithm. The keys are stored in 2 files
-and read from there when the constructor is called.
+The JwtUtil Class
 
-    The generateToken method uses the private key in order to sign the token and the subject is the pk of the table. If someone
-checks the usages of this method he/she will see that i only pass there the id of the table. The reason why is that when i want
-to use the public key to check if the id is tampered (when sent back to the server with a request) i want to be 100 per cent
-sure that the id is not changed and the row that i will select from the table is a row that belongs to the user that sent the request.
-So no user can have access to the data that do not belong to him. In addition i call the generateToken method when perform the login.
-Before each block of my controller is called the first thing done is to check if the user is the person he claims that he is. 
-This is done with the recommended way of spring security. The JwtAuthenticationFilter file is used for this purpose and specifically
-the doFilterInternal method is called automatically by the framework due to the configuration in the SecurityConfig file. The doFilterInternal
-method is called each time a request is sent to the server and only if it calls this method  filterChain.doFilter(request, response); it proceeds to the
-corresponding block in the controller. In order to reach this line of code and proceed with the endpoint it has to validate the request and pass all
-the checks (check if token is tampered or expired and roles). The PreAuthorize annotation is applied to all endpoints and the basic role is soldier and
-for the saveNewServices and deleteServices endpoints only the next level authority which is the commander can have access to add or delete services. 
-In case the username (the pk of the table user) is tampered i will detect it in this block as the private key is not known and the attacker can not produce a valid token 
-that will match the one produced in the server.
+The JwtUtil class provides the core functionality for handling JSON Web Tokens (JWT) within the application.
+Its responsibilities include:
+Generating JWT tokens upon successful user authentication
+Validating tokens in each incoming request
+Extracting the username (user ID) from valid tokens
+The implementation uses the RSA algorithm with a private and public key pair. These keys are securely stored in two separate files and are loaded when the class constructor is executed.
 
-    The isTokenTamperedOrExpired method in this file is the one that checks if the token is tampered or expired. The token has a timestamp
-  which can not be tampered too and the default duration is 5 hours.
+Token Generation
+The generateToken method creates a JWT using the private key to digitally sign the token. The subject field of the token contains the primary key (ID) of the user record from the database. Only the user ID is passed to this method — not the full user object — for security reasons.
+This design ensures that when the token is later verified using the public key, the system can confirm with 100% certainty that:
+The user ID has not been altered (tampered) during transmission. The data being accessed or modified belongs to the authenticated user.
+The generateToken method is invoked during the login process, immediately after the user’s credentials are verified.
+
+Token Validation and Request Filtering
+Before any controller method executes, the application validates each incoming request to confirm the authenticity and integrity of the JWT.
+This process follows Spring Security best practices. The JwtAuthenticationFilter class handles this logic. Its doFilterInternal method is automatically triggered by the Spring framework (as configured in SecurityConfig).
+
+For every incoming HTTP request:
+The filter checks the JWT’s validity (signature, expiration, and claims). If the token passes all checks, the method calls
+"filterChain.doFilter(request, response);" allowing the request to proceed to the corresponding controller endpoint. If validation 
+fails, the request is rejected before reaching the controller layer.
+
+The system uses the @PreAuthorize annotation to control access to specific endpoints:
+The default role required for most endpoints is ROLE_SOLDIER. The saveNewServices and deleteServices endpoints are restricted to users with the higher-level ROLE_COMMANDER authority. If an attacker attempts to tamper with the username (user ID) in a token, the system will detect it Without the private key, it is impossible to generate a valid signature matching the one issued by the server, and the request will be blocked.
+
+Token Integrity and Expiration
+The isTokenTamperedOrExpired method verifies whether a token is invalid due to tampering or expiration. Each token contains a timestamp that is cryptographically protected and cannot be altered without invalidating the signature. By default, the token validity period is set to 5 hours. After this time, users must re-authenticate to obtain a new valid token.
