@@ -97,7 +97,7 @@ However i gave a solution and implement it for this case too so that the algorit
 with armed services is less than the number of free of duty soldiers the corresponding block to these conditions is executed. At first it calculates the maximum
 number of armed soldiers that can set to free of duty. It arises from the difference between the armed soldiers and the armed services. Then it calls the
 getProportions method and for the armed soldiers. I will explain this method in the file i mentioned above. What is done here is that after it gets the proportions
-list for the armed soldiers it calls the calculateOutgoingInRareCase method and it sets with the same criteria as free of duty armed soliders equal with the 
+list for the armed soldiers it calls the computeFreeSoldiersInRareCase method and it sets with the same criteria as free of duty armed soliders equal with the 
 maximum calculated number of armed soldiers that can be set to free of duty. The armed soldiers has a priority an that's why this happens as they have the 
 heaviest load. Then i have to give the remaining days out to the unarmed soldiers and the same methods are called in this block for them too.
 
