@@ -2,10 +2,10 @@ The JwtUtil Class
 
 The JwtUtil class provides the core functionality for handling JSON Web Tokens (JWT) within the application.
 Its responsibilities include:
-Generating JWT tokens upon successful user authentication
-Validating tokens in each incoming request
-Extracting the username (user ID) from valid tokens
-The implementation uses the RSA algorithm with a private and public key pair. These keys are securely stored in two separate files and are loaded when the class constructor is executed.
+1.Generating JWT tokens upon successful user authentication
+2.Validating tokens in each incoming request
+3.Extracting the username (user ID) from valid tokens
+4.The implementation uses the RSA algorithm with a private and public key pair. These keys are securely stored in two separate files and are loaded when the class constructor is executed.
 
 Token Generation
 The generateToken method creates a JWT using the private key to digitally sign the token. The subject field of the token contains the primary key (ID) of the user record from the database. Only the user ID is passed to this method — not the full user object — for security reasons.
