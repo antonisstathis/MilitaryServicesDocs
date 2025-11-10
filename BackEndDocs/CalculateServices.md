@@ -79,7 +79,7 @@ The answer is that when i assign to a soldier a service or a free of duty situat
 the same when the conditions in the second if are executed and the conclusion is not correct and it leads to a bug. If you want you can comment out
 the flag variable and see the results. The reason why i remove the soldier from the set is that my job has finished when the size of them is zero. Then
 a service is assigned to all of them. Of course i will give the queries in the database with aggregation functions that shows the results after 300 or 500
-or any calculations in order any tester to see that the number of services assigned to each soldier after so many calculations are +-1 from the mean.
+or any calculations in order any tester to see that the number of services assigned to each soldier after so many calculations are +-1 from the mean (except for the case that the difference we discussed above is smaller than the number of free personnel - in this case it is not possible to satisfy the restriction that armed services are assigned only to armed servcices if you try to keep them balanced - in this case are balanced the numbers for armed and unarmed soldiers separately).
 Here i imply that it is not enough just to assign services to the soldier but the algoirthm must assigns them fairly. As we discussed in the first 
 paragraph the armed services are very hard in comparison with the unarmed ones and the free of duty days must be shared too as they are days for rest.
 But the scenario must have a unit that all soldiers started at the same day and not soldiers started months later as in this case there will be soldiers
