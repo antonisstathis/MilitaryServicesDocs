@@ -84,7 +84,7 @@ Here i imply that it is not enough just to assign services to the soldier but th
 paragraph the armed services are very hard in comparison with the unarmed ones and the free of duty days must be shared too as they are days for rest.
 But the scenario must have a unit that all soldiers started at the same day and not soldiers started months later as in this case there will be soldiers
 with much more services totally and the reason will not be that the algorithm is not fair but the fact that the one has served much more days. Here probably
-it is clear why i chose the proportions solution and not just to count the number of services. If i had chose the number of services then the soldiers with
+it is clear why i chose the proportions solution and not just to count the number of services. If i had chosen the number of services then the soldiers with
 300 days served would be every day free of duty as they will have much more services due to their total number in the army. 
 
     The getProportions method does what i have already explained in the first paragraph. I will explain in detail the file that contains this method
