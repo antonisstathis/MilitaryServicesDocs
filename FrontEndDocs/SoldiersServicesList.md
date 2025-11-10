@@ -1,102 +1,171 @@
-In this file i will explain the SoldiersServicesList.vue component which is the one that
-corresponds to the /home path. This is the main component of the app.
+The SoldiersServicesList.vue Component
 
-	When the component is rendered the methods in onMounted block are automatically called.
-The method getNameOfUnit sends a get request and get the name of the unit data. This data
-is assigned to the unitName variable and using interpolation is set as a title to the h1 html
-element. 
+The SoldiersServicesList.vue component corresponds to the /home route and serves as the main interface of the application.
+It displays the list of soldiers in a unit, their assigned services, and allows users to trigger new service calculations, view past data, and switch languages.
 
-	The getFirstDateCalc method is called and sends a get request to the backend and gets
-the date of the first date calculation. We will see in the method fetchPrevCalculation the usage 
-of this data. 
+Component Initialization (onMounted)
 
-	The method fetchSoldiers is called and sends a get request to the backend and gets
-all the data we see in the table rows. These are the data of the last calculation. These data are
-the current soldiers of the unit and the last services they are assigned. Then the method fetchSoldiers 
-calls the method fetchTableTitles and passes the string "lastcalc" in order to get the titles for the 
-table columns. The titles are different when the user selects a previous date from the input html
-element of type date as in this case we have two more columns. The table is created dynamically 
-with the use of v-for directive depending on the number of data that it gets from the get request to 
-the backend (request to the getSoldiers endpoint). Then it calls the setTableDataBasedOnLang method 
-in order to set the data of the Situation,Active and Duty Status of the table to the selected language. 
-The default selection is English. The last thing this method does is set the date of the last calculation
-to the input html element of type date. In addition it saves this date in the local storage of the 
-browser with the key selectedDate as we will need it in method fetchPrevCalculation for the possibility
-that the user selected in the input html element of type date a date which is out of the allowed interval.
-This is the interval of the calculations. In case a date out of this interval is selected then the input
-html element is set to the last selected or loaded date. The last method is called in the onMounted block
-is the fetchElementTitles and it loads from the json file the titles of the elements. It selects the correct
-file depending on the language selected. The json files are located in the folder locales.
+When the component is mounted, several methods are automatically executed within the onMounted block to initialize the view:
 
-	When the user clicks the New Services button a get request is sent to the backend server for the
-calculation of the next day services. The method called newServices does so with the request to the calc
-endpoint of the backend server. After that it calls again the fetchSoldiers method in order to get the
-data of the new calculation which is the last one after this event and show them in the table html element.
+getNameOfUnit
 
-	When the user clicks the Services Of Unit button then with the use of shorthand @change the method
-navigateTo is called and i pass there the path '/servicesOfUnit' which corresponds to the ServicesOfUnit.vue
-component. The method navigateTo uses the router so that render the ServicesOfUnit.vue component. This component
-is explained in the ServicesOfUnit.ms file.
+Sends a GET request to retrieve the unit name.
 
-	When the user clicks the select html element to change the language then with the use of shorthand
-@change the method changeLanguage is called. Here we have two possibilities. Either the calculation we see in the
-table is the last one or the user has already selected a previous one from the input html element of type date. The method
-changeLanguage handles both possible scenarios. Initially it saves in the local storage of the browser the
-selected language as we will need it in other method blocks of this and other components too. The selectedDate variable 
-with the use of v-model directive keeps the selected date of the input html elemnt of type date. The datatype in this 
-case is string and i convert it in date. The method changeLanguage is called in a second scenario too that i will explain 
-in a while and then the datatype is Date. I want to be a Date object in each case and that's why i have there the ternary 
-operator that checks if it is of type string and creates a Date object in this case or leaves it as it is in the second 
-possible scenario in which it is already a date. This second possible scenario i will explain with the explanation of the 
-method fetchPrevCalculation. The next step is that it checks if the selected date is the date of the last calculation or the
-date of a previous calculation. In the first case it calls the method fetchPrevCalculationData that i will explain in the next
-paragraph and in the other possible case (not other case is possible as i have the check in the previous method) it calls again
-the fetchSoldiers method that i already have explained. 
+Assigns the returned data to the unitName variable, which is dynamically displayed as the page title using Vue interpolation in the <h1> element.
 
-	The fetchPrevCalculationData method calls the method fetchTableTitles and passes the "prevcalc" string in order to load from
-the json file (depending on the selected language) the titles of the table html element for this scenario. In case the date is not
-the date of the last calculation the columns are two more. The one extra column contains the information of the duty status which tell
-us if the soldier is in operation or discharged and the other extra column is the first one and it is the solider unique idenity. This
-is not the pk of the table in the database but another column of the table. Then it sets in the local storage the selected date as 
-i will need it again in the fetchPrevCalculation for the scenario that the user clicked on a date out of the valid interval. What i want
-there is to set the date in the input html element of type date again to the last selected one and not just leave it in the invalid
-selected date. In the next step it assigns as a string the selected date to the selectedDate variable and then it hits the 
-getPreviousCalculation endpoint to get the data of the selected date calculation. Then it calls the setTableDataBasedOnLang that the
-fetchSoldiers also called just to translate if needed the data of the columns Situation,Active,Armed and Duty Status. Then the
-table html element is created dynamically due to the v-for directive with the new data in the correct language. 
+getFirstDateCalc
 
-	When the user clicks the input html element of type date and then selects a previous date the selectedDate variable is set
-to this new date due to the v-model directive and the method fetchPrevCalcualtion is called due to the shorthand @change. The 
-fetchPrevCalculation method initially checks if the selected date is in the valid interval. The valid interval is between the date
-of the first calculation and the date of the last one. In case the selected date is out of this interval it calls the show method
-and it appears a global popup window of color red with the appropriate message. The popup is for 3.3 seconds visible and then the method
-returns. In the other possible (the case that the user selected a date in this valid period) the changeLanguage method
-is called again as i want exactly the same facts to happen. This method is already explained.  
+Sends a GET request to obtain the date of the first calculation.
 
-	When the user clicks the Last Services button then the method fetchSoldiers is called due to the shorthand @click for the
-click event on the button and this method is already explained above. It just get the last calculation. I added this button in order
-the user not to search for the last date in the input html element of type date. However the user can select the last date from the
-input html element of type date too and the result will be exactly the same. It will load the same table with the same data as it does
-when the button Last Services is clicked.
+This value is later used in the fetchPrevCalculation method to validate date selections.
 
-	When the user clicks any row of the table then it opens a new component that allows him to update the Situation and the Active
-data of the selected soldier. If he changes the situation to unarmed then from the next calculation only unarmed services will be
-assigned to this soldier and if he changes the Active to free of duty (eg due to illness) then from the next calculation this soldier
-will not be included in the calculation at all until the user set again this person to active with the same way. The component used
-for this purpose is the SoldierForm.vue. The event is the click on the row and the method selectSoldier is called. This method hits
-the getSoldier endpoint of the backend and set to the local storage of the browser the data of this soldier in order the SoldierForm.vue
-component to find them. Then with the call of router.push it gets the SoldierForm.vue component from the path /soldierForm of the
-nginx server that hosts the vue cli app. The server for the backend spring boot application is a tomcat application server and it
-returns only data while the server for the frontend Vue cli app is nginx and it sends the componenst (two different ports are used).
+fetchSoldiers
 
-	The logout method is called when the Logout button is clicked and it clears the local storage as the jwt token is saved there
-after the sign in and it renders again the sign in component using the router.push("/signIn") call. The jwt token as it will be explained
-in the documentation for the backend carries a timestamp and after 5 hours is expired.
+Sends a GET request to retrieve the latest soldier data — the soldiers currently serving in the unit and their most recent assigned services.
 
-	All the requests send the jwt token to the server. This behaviour is defined in the line 25 of the main.js file using axios 
-interceptors.It is not needed to add it in each request as it is applied globally. The spring boot app checks in the controller layer 
-if the jwt token is tampered or expired and responds with the requested data and ok status only in the case that the jwt token is not 
-tampered or expired. In case the jwt token is tampered or expired the spring boot app responds with 401 status unathorized. The same 
-happens with the domain name of the server that hosts the spring boot app. It is not needed to add it in each request as it is added 
-automatically. This behaviour is defined in line 18 of the main.js file. The url is "http://localhost:8080/" as i run the app locally 
-using Docker or else the domain name would be there.
+Calls fetchTableTitles("lastcalc") to retrieve the table column headers for the latest calculation.
+The column titles differ when displaying past calculations (where two additional columns appear).
+
+The table is generated dynamically using the v-for directive based on the number of records returned.
+
+Calls setTableDataBasedOnLang to localize the table data (e.g., “Situation,” “Active,” and “Duty Status”) according to the selected language.
+
+Updates the date input field with the last calculation date and stores it in local storage under the key selectedDate.
+This prevents invalid date selections (outside the allowed interval) from causing inconsistent state.
+
+fetchElementTitles
+
+Loads localized UI labels from JSON files located in the locales directory.
+
+Selects the correct language file based on the currently selected language.
+
+User Interactions
+1. Generating New Services
+
+When the user clicks the “New Services” button:
+
+The newServices method sends a GET request to the backend’s /calc endpoint to trigger the next-day service calculation.
+
+Once the new data is generated, it re-invokes fetchSoldiers to display the updated table with the newly calculated services.
+
+2. Viewing All Services of the Unit
+
+Clicking the “Services of Unit” button triggers the navigateTo method via the @change event.
+
+The method calls router.push('/servicesOfUnit'), navigating to the ServicesOfUnit.vue component.
+
+This component and its functionality are documented in the ServicesOfUnit.md file.
+
+3. Changing the Language
+
+When the user changes the language using the <select> element:
+
+The changeLanguage method is triggered via the @change event.
+
+The selected language is saved in local storage to ensure consistency across the app.
+
+The selectedDate (bound with v-model) is retrieved and converted to a Date object if necessary (using a ternary check), ensuring consistent date type handling.
+
+Depending on whether the user is viewing the latest or a previous calculation:
+
+If it’s the latest calculation → calls fetchSoldiers.
+
+If it’s a previous calculation → calls fetchPrevCalculationData.
+
+4. Viewing Previous Calculations
+
+The fetchPrevCalculationData method:
+
+Loads table headers for previous calculations using fetchTableTitles("prevcalc").
+
+Adds two additional columns:
+
+Soldier ID (a unique identifier, distinct from the database PK).
+
+Duty Status (indicates whether a soldier is active or discharged).
+
+Stores the selected date in local storage for validation in later requests.
+
+Fetches data from the getPreviousCalculation endpoint.
+
+Calls setTableDataBasedOnLang to apply localization before rendering the updated table dynamically using v-for.
+
+When the user selects a date in the <input type="date"> field:
+
+The v-model updates selectedDate.
+
+The fetchPrevCalculation method is triggered via the @change shorthand.
+
+It checks whether the date is within the valid range (between the first and last calculation dates).
+
+If invalid, a red global popup appears for 3.3 seconds (via the show method), and execution stops.
+
+If valid, the method calls changeLanguage to refresh the table data and labels appropriately.
+
+5. Returning to the Last Calculation
+
+Clicking the “Last Services” button triggers fetchSoldiers again, refreshing the table with the most recent calculation.
+This provides a shortcut so users don’t have to manually select the last date in the date picker.
+
+6. Updating a Soldier’s Data
+
+Clicking on a table row opens the SoldierForm.vue component, allowing the user to update a soldier’s:
+
+Situation (e.g., Armed → Unarmed), or
+
+Active status (e.g., Active → Free of Duty).
+
+Depending on these changes:
+
+Soldiers marked Unarmed will only be assigned unarmed services in subsequent calculations.
+
+Soldiers marked Free of Duty are excluded from calculations until reactivated.
+
+This process works as follows:
+
+The selectSoldier method is triggered by the row click event.
+
+It calls the getSoldier endpoint to retrieve soldier data.
+
+The data is stored in local storage for retrieval by the SoldierForm.vue component.
+
+The router navigates to /soldierForm via router.push().
+
+The frontend is served by an Nginx server (Vue CLI app).
+
+The backend (Spring Boot) runs on a Tomcat application server, providing data via a REST API.
+
+Both run on separate ports (commonly configured via Docker).
+
+7. Logging Out
+
+When the “Logout” button is clicked:
+
+The logout method clears local storage, removing the saved JWT token.
+
+It navigates back to the sign-in component using router.push("/signIn").
+
+As explained in the backend documentation, JWT tokens include a timestamp and expire after 5 hours.
+
+Axios Interceptors and Global Configurations
+
+All frontend requests automatically include:
+
+The JWT token, added globally via an Axios interceptor (defined on line 25 of main.js).
+
+The base backend URL, set globally on line 18 of main.js.
+
+This eliminates the need to manually include the token or base URL in individual requests.
+The default backend URL is:
+
+http://localhost:8080/
+
+
+(used when running the application locally in Docker).
+In production, this value is replaced with the actual domain name.
+
+The Spring Boot backend validates every incoming request by checking whether the JWT token is valid, unexpired, and untampered.
+
+If valid → responds with data and 200 OK.
+
+If invalid or expired → responds with 401 Unauthorized.
