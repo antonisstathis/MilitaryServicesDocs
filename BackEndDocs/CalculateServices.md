@@ -1,66 +1,86 @@
-In this file i explain the algorithm that calculates the new services. This is the service of this web app
-and in reality this is a scheduler that assigns the services of the unit to the available soldiers. This scheduler
-ought to be fair. It means that two soldiers of the same category that started the same day their career and have 
-served in the same units must have the same number of armed,unarmed services and free of duty days to rest. Of course
-the mean is in most cases not an integer and that's why the difference in number of services between two random soldiers 
-is 1 or in some rare cases even 2. The difference is equal with 2 in some rare cases as it the requirements must be satisfied.
-It means that all the unarmed services must be assigned to soldiers, all the armed soldiers (the other category) must be
-assigned only to armed soldiers and the days out must be fairly assigned too in order the soldiers to rest. The armed 
-services are supposed to be very hard in comparison with unarmed ones. So when a number of unarmed services is going to
-be assigned to armed soldiers my algorithm assigns the unarmed service to the soldier who is more tired. I will discuss
-about it in the following lines of this md file and i will show you the method that finds the most tired soldiers that
-has priority. The criteria in order to conclude which soldiers are most tired is the proprtion of services of each soldier.
-For example suppose a soldier has served for 70 days in a unit and another one has served for 300 days in other units.
-Suppose that the first one has a proprtion of 5:1 (days in : days out) and that the other soldier with 300 days served
-has a proportion of 1:2 (days in : days out). I consider as more tired the soldier with 5:1 proportion and not that one
-with the 300 days. So my implementation calculates the proportions for all soldiers and saves them in a data structure 
-as float numbers with descending order. It means that in the index 0 is the soldier with the biggest priority and the 
-unarmed service will be assigned to him. In the following lines i will show you what my algorithm does from the first 
-step until the last one. Let's keep in mind here that the soldiers are equal or more than the services and that the armed soldiers
-are equal or more than the armed services. In order this to be satisfied there is a check in server side when the post request is sent 
-to add a new service. If the number of soldiers is not bigger orf equal with the number of services then the server responds with
-bad request and the message "Not enough soldiers available to add these services." printed in the global popup to notify
-the user. This message is saved in the messages.properties file and retrieved with the key addservicesrejected.
+Overview of the Service Calculation Algorithm
 
-    The endpoint is the /calc and the name of method is calculateNewServices in the SoldiersController.java file.
-This is a get request here sent to the server when the user clicks the New Services button in the home page. As someone
-can see in the block of this method at first checks if the jwt token is validate but we will discuss about the security
-part in another file and i will silently pass this checks in my analysis here. What it does is just call the calculateServices
-method of the SoldierService file. This file has a field which is an instance of the CalculateServices class and in this block
-calls the calculateServices method and pass there the username which is the pk of the table User. The table User has a foreign
-key which is the pk of the table Soldier and the table Soldier has a foreign key which is the pk of the table Unit. It means
-that if i know the username then i can know the unit for which i have to calculate the services of the next day in this 
-calculation. The method calculateServices returns an ArrayList of Soldier objects and then the method saveNewServices is called
-in order to insert in the services table the new services. The table servcices has a foreign key which is the pk of the soldiers
-table and in this column i save the soldier that executed this service. In addition the services table has a date column 
-and there i save in this column the date of the next day calculation. So in this table when the New Services button is clicked
-there are new entries equal with the number of soldiers of the unit the moment the button was clicked by the user. The block
-in the component that sends this request does a second request after this in order to get these new entries and replace the rows
-of the table in the home page with these new ones which all have as a date the date of the next day. No delete query is executed
-for the services table as the user wants to see any previous calculation by just changing the date in the input html field of type
-text.
+This document explains the algorithm responsible for calculating new service assignments. This algorithm functions as the core scheduling service of the web application, assigning unit services to available soldiers in a fair and balanced manner.
 
-    So the method that does the job is the calculateServices method of the CalculateServices java file and here i have my 
-subproblems defined in order to solve the main problem which is to calculate the services of the next day with a way as described
-in the first paragraph of this file. You can never write the code for this in a single block but you have to define the subproblems
-that you have to solve with the correct order. Initially i create the data structure objects i need for the soldiers for the services
-and of course in the nextDate reference i keep the date of the next day calculation. The last subproblem i solve is to set the dates
-to this one. The data structures i need for the soldiers is an ArrayList to save them all ordered, two Sets which keeps unordered the 
-armed and the unarmed soldiers (the two categories) and i use them in order to search in constant time for a soldier and a map with key
-the id of the soldier which is int. Of course i use the wrapper Integer class as a primitive type can not be used as a key in the HashMap.
-I need the map in order to search in constant time a soldier by his id. After that i create the data structure objects for the services
-that has to be assigned to the soldiers as described in the first paragraph of this file. Note here that all the services must be assigned.
-Each unit has at the day of each calculation a number of services and the commander defines them. The findByUnit methid just retrieves all
-of them and return them in the servicesOfUnit list ordered. The ArrayList is a dynamic data structure that keeps in a specific order the
-objects and i need two more lists for the armedServices and for the unarmed ones and a list to keep in descending order the proportions of 
-the soldier for the subproblem in which i have to assign unarmed (easy one) service to an armed soldier as described in the first paragraph.
-The first method called is the addServicesAndSoldiers and i pass there all the data structures created above in order to save there all
-the soldiers and all the services of the unit. The Soldier class has a field services. In this list i add only the service that will be assigned
-for the next day. The setter method in this file calls the method add and the size of this list in each Soldier object is one. Now we have 
-reached at a point that i can say that the problem is to iterate all soldiers of the allSoldiers list and set there a service. But the soldiers
-are more than the services so some are free od duty and i have to select which of them will be free of duty and the services can not be assigned 
-to each soldier. So it is not that simple. The first subproblem i have to solve is to decide which soldiers will be free of duty and the remaining
-ones will be equal with the number of services.
+Purpose and Fairness Principle
+The scheduler is designed with fairness as its primary goal. Two soldiers belonging to the same category, who started service on the same date and have served in the same units, should have approximately the same number of armed services, unarmed services, and free-of-duty (rest) days. Since the average (mean) number of services per soldier is often not an integer, small differences between soldiers are expected. Typically, the difference between any two randomly chosen soldiers does not exceed one service, and only in rare cases it may reach two—this occurs when strict assignment constraints must still be satisfied.
+
+The following constraints are always enforced:
+All unarmed services must be assigned.
+All armed services must be assigned exclusively to armed soldiers.
+Free-duty days must be distributed fairly to ensure adequate rest periods.
+
+Armed services are considered significantly more demanding than unarmed ones. For this reason, when unarmed services need to be assigned to armed soldiers, the algorithm prioritizes the most fatigued (tired) soldiers in that category.
+
+Determining Soldier Fatigue
+To determine which soldiers are the most tired, the algorithm computes a proportion for each soldier based on their service history. This proportion represents the ratio of days on duty to days off duty.
+
+For example:
+Soldier A has served 70 days in a unit with a ratio of 5:1 (days on : days off). Soldier B has served 300 days across several units with a ratio of 1:2. In this case, Soldier A is considered more tired, despite having fewer total service days, because their duty-to-rest ratio is significantly higher. The algorithm calculates these proportions for all soldiers and stores them as floating-point values in a data structure sorted in descending order. Thus, the soldier at index 0 in the list has the highest priority, meaning they are the most tired and will receive the next unarmed service assignment.
+
+Preconditions and Server-Side Validation
+The algorithm assumes that:
+The total number of soldiers is greater than or equal to the total number of services.
+The number of armed soldiers is greater than or equal to the number of armed services.
+To ensure these conditions are met, a server-side validation is performed whenever a POST request is sent to add new services.
+If the number of soldiers is less than the number of services, the server responds with an HTTP 400 (Bad Request) error and the message:
+"Not enough soldiers available to add these services."
+This message is defined in the messages.properties file under the key addservicesrejected and is displayed to the user via the global popup notification.
+
+
+/calc Endpoint Overview
+The /calc endpoint is implemented in the calculateNewServices method of the SoldiersController.java file.
+This endpoint is triggered via a GET request when the user clicks the “New Services” button on the home page.
+
+Request Handling Flow
+When the request is received, the method first performs a JWT token validation to ensure that the user is authenticated.
+The security aspects of this validation are discussed in detail in a separate document, so they will be omitted from this analysis.
+After successful validation, the method calls the calculateServices method from the SoldierService class. Within the SoldierService class, there is a field that holds an instance of the CalculateServices class. The service method invokes calculateServices, passing the username as a parameter.
+The username serves as the primary key (PK) of the User table, which is linked through foreign key relationships as follows:The User table has a foreign key referencing the Soldier table.
+The Soldier table has a foreign key referencing the Unit table. This relational chain allows the system to determine the unit associated with a specific user, enabling the application to calculate the next day’s service assignments for that unit.
+
+Service Calculation and Persistence
+The calculateServices method returns an ArrayList of Soldier objects, each representing a soldier with their newly assigned service for the upcoming day.
+After this, the saveNewServices method is invoked to insert the new service records into the services table in the database.
+
+This table includes:
+A foreign key referencing the soldiers table, identifying the soldier assigned to the service.
+A date column, where the date of the next day (the date for which the calculation was performed) is stored.
+As a result, when the “New Services” button is clicked, new entries are inserted into the services table—one for each soldier in the unit at the time of the request.
+Frontend Update Behavior
+After the new services are saved, the frontend component sends a second request to retrieve these newly created records.
+The response replaces the existing rows in the home page’s service table with the updated data, all of which correspond to the next day’s date.
+Importantly, no DELETE queries are executed on the services table.
+This design allows users to review previous calculations simply by changing the date in the input HTML field on the page.
+Each date corresponds to a snapshot of the service assignments as they were generated on that specific day.
+
+
+    Overview of the calculateServices Method
+The main functionality is implemented in the calculateServices method within the CalculateServices.java file.
+This method defines and solves several subproblems in order to address the main objective: calculating the service assignments for the next day in the structured and balanced manner described earlier in this document. It is not feasible to implement this logic in a single code block. Instead, the problem must be decomposed into well-defined subproblems that are solved in the correct order.
+
+Initialization of Data Structures
+At the start of the method, the necessary data structure objects are created:
+
+For Soldiers:
+An ArrayList to store all soldiers in a specific order. Two Set collections to store armed and unarmed soldiers, respectively. These sets allow constant-time lookup for soldiers by category.
+A Map<Integer, Soldier> (using the Integer wrapper class as the key type, since primitive types cannot be used as map keys) to enable constant-time access to a soldier by their ID.
+
+For Services:
+The services that need to be assigned to soldiers are also represented using appropriate data structures. These services are retrieved from the database using the findByUnit method, which returns all services for a unit in an ordered servicesOfUnit list. Two additional ArrayList objects are used to store armed services and unarmed services separately. Another list is maintained to keep soldier proportions in descending order, which is required in the subproblem where an unarmed (less demanding) service needs to be assigned to an armed soldier, as described earlier. Additionally, a reference variable nextDate is used to store the date for which the new service calculation is performed. The final subproblem addressed in the algorithm involves assigning this nextDate to the relevant records.
+
+Loading Data
+The first method invoked within this process is addServicesAndSoldiers.
+This method receives all previously initialized data structures as parameters and populates them with the soldiers and services of the unit.
+Each Soldier object contains a field named services, which is a list used to store the service assigned for the next day.
+The setter method in this class internally calls the add method, ensuring that the list’s size within each Soldier instance is exactly one (i.e., only the next day’s service is stored).
+Problem Definition and First Subproblem
+At this stage, the overall problem can be framed as follows:
+Iterate over all soldiers in the allSoldiers list and assign each one a service for the next day.
+However, since the number of soldiers typically exceeds the number of available services, not every soldier will receive a service assignment. Some must be designated as free of duty.
+Therefore, the first subproblem to solve is determining which soldiers will be free of duty.
+Once this is resolved, the remaining soldiers—whose count will match the number of available services—can then be assigned services accordingly.
+
 
     The setFreeAndOutgoingSoldiers method just check which of them are set to free of duty due to illness or anything and will not be included
 in the calculation. This block removes them from the sets in case they are set to free of duty for a specific reason from the user. There is a 
@@ -70,58 +90,74 @@ component that does so.
 number is the number of soldiers that must be set to free of duty. The remaining ones will be equal with the number of services that has to be
 assigned. So in the numberOfFreePersonnel variable i have this number.
 
-    Here i have two possible cases. The one case is that the number of armed soldiers minus the number of armed services is less than the value
-assigned to the numberOfFreePersonnel variable. In this case i can not set to free of duty number of armed soldiers equal with numberOfFreePersonnel. As 
-we discussed in the first paragraph the number of armed soldiers must be at least equal with the number of armed services. The other case is that
-the number of armed soldiers is greater than this difference so i can set to free of duty numberOfFreePersonnel soldiers. i use the boolean flag so that
-in case the difference is greater than the numberOfFreePersonnel then the next block will not be executed. Why it will be executed without this flag ?
-The answer is that when i assign to a soldier a service or a free of duty situation then i remove him from the set. So the size of both sets is not
-the same when the conditions in the second if are executed and the conclusion is not correct and it leads to a bug. If you want you can comment out
-the flag variable and see the results. The reason why i remove the soldier from the set is that my job has finished when the size of them is zero. Then
-a service is assigned to all of them. Of course i will give the queries in the database with aggregation functions that shows the results after 300 or 500
-or any calculations in order any tester to see that the number of services assigned to each soldier after so many calculations are +-1 from the mean (except for the case that the difference we discussed above is smaller than the number of free personnel - in this case if you try to keep them balanced it is not possible to satisfy the restriction that armed services are assigned only to armed soldiers - in this case  the numbers for armed and unarmed soldiers are balanced separately).
-Here i imply that it is not enough just to assign services to the soldier but the algoirthm must assigns them fairly. As we discussed in the first 
-paragraph the armed services are very hard in comparison with the unarmed ones and the free of duty days must be shared too as they are days for rest.
-But the scenario must have a unit that all soldiers started at the same day and not soldiers started months later as in this case there will be soldiers
-with much more services totally and the reason will not be that the algorithm is not fair but the fact that the one has served much more days. Here probably
-it is clear why i chose the proportions solution and not just to count the number of services. If i had chosen the number of services then the soldiers with
-300 days served would be every day free of duty as they will have much more services due to their total number in the army. 
+    In this section, two possible cases are considered:
+Case 1: Limited Difference Between Armed Soldiers and Services
+When the difference between the number of armed soldiers and the number of armed services is less than the value assigned to the numberOfFreePersonnel variable, it is not possible to assign a number of free-duty armed soldiers equal to numberOfFreePersonnel. As previously mentioned, the number of armed soldiers must always be at least equal to the number of armed services to ensure that all armed services can be staffed.
 
-    The getProportions method does what i have already explained in the first paragraph. I will explain in detail the file that contains this method
-in the CountServicesForEachSold.md file. Then the calculateNumberOfFreePersonnel method is called to get the total number of free of duty soldiers and then in 
-this block the computeFreeSoldiers method is called. Here it calls the Collections.sort method and it sorts in descending order the objects of this
-list based on the float number we discussed in the first paragraph. Then it just iterate the proprtionsList and sets as free of duty the soldiers starting from
-the index 0 and decrement the variable by 1 in each rep. When the variable is equal with 0 it just returns. Now the number of soldiers is equal with the number
-of services in the data structures totally. The other case is actually a rare one as a unit has a lot of soldiers (much more than the number of services)
-However i gave a solution and implement it for this case too so that the algorithm runs correctly for any case. In case that the difference of armed soldiers
-with armed services is less than the number of free of duty soldiers the corresponding block to these conditions is executed. At first it calculates the maximum
-number of armed soldiers that can set to free of duty. It arises from the difference between the armed soldiers and the armed services. Then it calls the
-getProportions method and for the armed soldiers. I will explain this method in the file i mentioned above. What is done here is that after it gets the proportions
-list for the armed soldiers it calls the computeFreeSoldiersInRareCase method and it sets with the same criteria as free of duty armed soliders equal with the 
-maximum calculated number of armed soldiers that can be set to free of duty. The armed soldiers has a priority an that's why this happens as they have the 
-heaviest load. Then i have to give the remaining days out to the unarmed soldiers and the same methods are called in this block for them too.
+Case 2: Sufficient Difference Between Armed Soldiers and Services
+When the number of armed soldiers exceeds this difference, it is possible to assign numberOfFreePersonnel armed soldiers as free of duty.
 
-    Now the number of soldiers is equal with the number of services totally in the data structures in both two possible cases. The next subproblem to
-be solved is to assign the unarmed services to unarmed soldiers. And why this first ? The reason why is that by the definition of the problem the armed
-soldiers can be assigned any service of both categories while the unarmed soldiers can be assigned only unarmed services. It means that if i start with the
-armed services and assign them to armed soldiers the numbers after 300 days will not be +=1 and i mean the total number of armed and unarmed services assigned
-to armed soldiers as described above. If you think of it in this point the algorithm has not the knowledge of the remaining unarmed services so that assign them
-to the most tires soldiers and we discussed in the first paragraph the most tired ones are those ones with the worst proportion. The calculateServicesForUnarmedSoldiers
-is called now and randomly an unarmed service is selected from the ordered list with the unarmed services and then it is assgned to an unarmed soldier. After this block
-is executed in the unarmedServices list have remained only the rest unarmed services. Of course the size of this list can be zero in case that the unarmed services is 
-equal with the number of unarmed soldiers. The method returns and that't why i have a check to avoid the call of the method setUnarmedServicesToArmedSoldiers in this
-case. 
+A boolean flag is used to handle these cases correctly. This flag ensures that if the difference is greater than numberOfFreePersonnel, the subsequent block of code is not executed.
+Without this flag, the second conditional block would still execute, leading to incorrect results. The reason lies in how soldiers are managed within the data structures: whenever a soldier is assigned a service or marked as free of duty, they are removed from the corresponding set. Consequently, the sizes of these sets change dynamically. If the second condition were evaluated without the flag, it would operate on altered set sizes, producing a logical error and ultimately causing a bug. (You can verify this behavior by commenting out the flag variable and observing the outcome.)
+The removal of soldiers from the set is intentional: once all soldiers have been assigned a service or a free-duty status, and both sets become empty, the allocation process is considered complete.
+To validate the correctness of the algorithm, database queries with aggregation functions are provided. These queries can display results after 300, 500, or any number of iterations, allowing testers to verify that the number of services assigned to each soldier remains within ±1 of the mean. The only exception occurs when the difference between armed soldiers and armed services is smaller than the number of free-duty personnel. In that scenario, maintaining a perfectly balanced assignment is impossible while still ensuring that armed services are assigned exclusively to armed soldiers. As a result, the algorithm balances armed and unarmed soldiers separately in such cases. It is important to note that the algorithm not only assigns services but also aims to distribute them fairly. As discussed earlier, armed services are significantly more demanding than unarmed ones, and rest days (free-duty days) must be allocated equitably to prevent overloading certain individuals.
+However, fairness can only be evaluated under realistic conditions—specifically, when all soldiers in a unit begin service on the same date. If some soldiers join later, they will naturally have fewer total services due to shorter service duration. In such cases, apparent imbalances are not the result of algorithmic unfairness but rather differences in total time served.
+This reasoning explains the choice to base the computation on proportions rather than simply counting the total number of services. If the algorithm relied solely on service counts, soldiers who had already served longer (e.g., 300 days) would be disproportionately assigned as free of duty, since their total service history would heavily skew the balance.
 
-    The method setUnarmedServicesToArmedSoldiers solves the next subproblem which is as its name describes to assign the remaining unarmed services to 
-armed soldiers as all of the services have to be assigned. The getHistoricalDataDesc is responsible to get in descending order the number of armed services
-that the armed soldiers have served until now. The query it runs is a group by query with aggregation function count in order to count them and desc. The 
-where clause has a condition for the unit for the discharged in order to select only the soldiers that serve at the moment of the calculation in the unit and 
-not discharged ones and the armed column in order to filter the armed services. It is actually an inner join query as the services as i have already explained
-are in the servcies table and the servcies table has a foreign keu which is the pk of the table soldiers. The group by is done by the soldier id as we have to 
-count here the armed services of each soldier. The method just iterates the historicalData list and assigns the remaining unarmed services to the soldiers
-with the most armed services until now. The addTheRestOnes method has a purpose in case we have soldiers that are new in the unit and they have served zero
-armed services and it means that the inner join query wil not retrieve them from the database. 
+    The getProportions method performs the functionality previously described in the first paragraph. A detailed explanation of this method is provided in the CountServicesForEachSold.md file.
+Afterward, the calculateNumberOfFreePersonnel method is invoked to determine the total number of soldiers who are free of duty. Following this, the computeFreeSoldiers method is called. Within this method, the Collections.sort function is used to sort the list in descending order based on the floating-point value discussed earlier. The algorithm then iterates through the proportionsList, marking soldiers as free of duty starting from index 0 and decrementing a counter variable with each iteration. Once the counter reaches zero, the process terminates. In this scenario, the number of soldiers equals the total number of services across all data structures. However, there is also a secondary (and rare) case where a unit has significantly more soldiers than available services. To ensure robustness, the algorithm handles this case as well. When the difference between the number of armed soldiers and armed services is smaller than the total number of free-duty soldiers, a specific block of code is executed to address this situation. The algorithm first determines the maximum number of armed soldiers that can be assigned as free of duty, which corresponds to the difference between the total number of armed soldiers and the armed services. It then calls the getProportions method again—this time for the armed soldiers—to obtain their proportions list. Next, the computeFreeSoldiersInRareCase method is invoked, setting as free of duty the calculated maximum number of armed soldiers, following the same criteria as before. Armed soldiers are prioritized in this step due to their heavier workload. Finally, the remaining free-duty positions are allocated to unarmed soldiers, applying the same methods and logic to ensure fair and consistent assignment.
 
-    The calculateServicesForArmedSoldiers method solves the last subproblem which is to assign the armed services to the armed soldiers. This method
-just has to iterate the armed soldiers and choose randomly one the armed services and assign it to him. Now we reached to the last subproblem we have 
-to solve which is to set the correct date and unit of the new calculation. Then the method returns the allSoldiers data structure.
+    Assigning Unarmed Services to Unarmed Soldiers
+At this stage of the algorithm, the number of soldiers is equal to the total number of services across all data structures.
+This condition holds true for both possible cases previously described.
+The next subproblem to solve is the assignment of unarmed services to unarmed soldiers.
+
+Rationale for the Order of Assignment
+This step is performed before assigning armed services. The reason lies in the constraints of the problem definition: Armed soldiers can be assigned services of either category (armed or unarmed). Unarmed soldiers, however, can be assigned only unarmed services. If the algorithm were to start by assigning armed services to armed soldiers, the cumulative service counts (armed + unarmed) for armed soldiers would, over time, deviate from the expected ±1 balance after many iterations (e.g., 300 days). Moreover, at this point in the process, the algorithm does not yet know how many unarmed services will remain. Therefore, it cannot fairly assign those remaining unarmed services to the most fatigued soldiers — those identified earlier based on their service-to-rest proportion.
+
+The calculateServicesForUnarmedSoldiers method is called at this stage.
+It performs the following steps: Selects randomly an unarmed service from the ordered list of unarmed services.
+Assigns the selected service to an unarmed soldier.
+
+After this block executes, the unarmedServices list contains only the remaining unassigned unarmed services.
+In some cases, this list may become empty, for instance, when the number of unarmed services equals the number of unarmed soldiers.
+When the list is empty, the method returns immediately, and a check is performed to skip the call to setUnarmedServicesToArmedSoldiers, since no unarmed services remain to be distributed.
+
+    The setUnarmedServicesToArmedSoldiers Method
+The setUnarmedServicesToArmedSoldiers method addresses the next subproblem in the service-assignment process: assigning the remaining unarmed services to armed soldiers, 
+ensuring that all services are properly distributed.
+
+Retrieving Historical Data
+The method relies on getHistoricalDataDesc, which retrieves historical records of armed soldiers and the number of armed services they have completed in descending order.
+This method executes a GROUP BY SQL query with an aggregation function (COUNT) to calculate the total number of armed services for each soldier. The query includes the 
+following key conditions:
+
+A WHERE clause that:
+Filters by the current unit, ensuring that only soldiers currently serving (not discharged) are considered.
+
+Filters by the armed column to select only armed services.
+An INNER JOIN between the services and soldiers tables, as each service record in the services table includes a foreign key referencing the primary key (ID) of the corresponding soldier.
+A GROUP BY clause on the soldier ID, since the goal is to count the total armed services performed by each soldier. An ORDER BY DESC clause to sort the results from the highest to 
+the lowest count.
+
+Assigning Unarmed Services
+Once the data is retrieved, the method iterates through the historicalData list, assigning the remaining unarmed services to the soldiers who have performed the most armed services to date.
+This approach ensures fairness by compensating those soldiers with lighter (unarmed) service duties when possible.
+
+Handling New Soldiers
+The addTheRestOnes method is used to handle an edge case:
+when newly assigned soldiers in the unit have not yet completed any armed services. Because the main query uses an INNER JOIN, such soldiers (with zero historical records) 
+would not appear in the query results. The addTheRestOnes method ensures that these new soldiers are included in the assignment process, maintaining consistency and completeness 
+in the service distribution. 
+
+    The calculateServicesForArmedSoldiers Method
+The calculateServicesForArmedSoldiers method addresses the final subproblem in the service assignment process — assigning armed services to armed soldiers.
+
+Functionality
+This method iterates through the list of armed soldiers, and for each one, it randomly selects an available armed service and assigns it to that soldier.
+This ensures that all armed services are properly distributed among qualified personnel, completing the service allocation process.
+
+Finalization
+After assigning the armed services, the algorithm proceeds to finalize the calculation by: Setting the date of the new calculation (the date corresponding to the next day).
+Setting the unit associated with this calculation to ensure correct data linkage and consistency. Once these steps are completed, the method returns the updated allSoldiers 
+data structure, which now contains the full set of service assignments for the next day.
