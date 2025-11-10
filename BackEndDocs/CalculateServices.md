@@ -66,7 +66,7 @@ ones will be equal with the number of services.
 in the calculation. This block removes them from the sets in case they are set to free of duty for a specific reason from the user. There is a 
 component that does so. 
 
-    The calculateNumberOfOutgoing method is the next one called and just calculates the difference between the soldiers and the services. This
+    The calculateNumberOfFreePersonnel method is the next one called and just calculates the difference between the soldiers and the services. This
 number is the number of soldiers that must be set to free of duty. The remaining ones will be equal with the number of services that has to be
 assigned. So in the numberOfOutgoing variable i have this number.
 
@@ -88,7 +88,7 @@ it is clear why i chose the proportions solution and not just to count the numbe
 300 days served would be every day free of duty as they will have much more services due to their total number in the army. 
 
     The getProportions method does what i have already explained in the first paragraph. I will explain in detail the file that contains this method
-in the CountServicesForEachSold.md file. Then the calculateNumberOfOutgoing method is called to get the total number of outgoing soldiers and then in 
+in the CountServicesForEachSold.md file. Then the calculateNumberOfFreePersonnel method is called to get the total number of outgoing soldiers and then in 
 this block the assignAsOutgoingBasedOnProp method is called. Here it calls the Collections.sort method and it sorts in descending order the objects of this
 list based on the float number we discussed in the first paragraph. Then it just iterate the proprtionsList and sets as free of duty the soldiers starting from
 the index 0 and decrement the variable by 1 in each rep. When the variable is equal with 0 it just returns. Now the number of soldiers is equal with the number
