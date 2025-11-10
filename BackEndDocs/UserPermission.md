@@ -1,10 +1,11 @@
-The methods of the java file UserPermission are used for an extra check except for the jwt token so that i can 
-check if the requested row belongs to the user. In order to do so i use the schema in this mechanism. The user 
-table has a foreign key which is the pk of the table soldiers and the table soldiers has a foreign key which 
-is the primary key of the table unit and this way i can know with 100 per cent probability the unit of the user. Now any data
-that the user asks to be updated i check if they belong to the same unit as soldiers,services and generally all
-tables have a foreign key to the pk of the unit table. I just want the row asked to be a row that in this column 
-has the id of the same unit with the user that sent the request. I do not need this extra check as the jwt token
-can not fail but the best practises impose this to be done as you never know. For example the private key is stolen
-with some way and the attacker is now in a position to produce a valid token or changes are done with new commits
-from another developer in the future and he broke somewhere the check if the jwt token is tampered or not.
+The UserPermission Class
+
+The methods in the UserPermission class provide an additional layer of security beyond the standard JWT token validation. Their purpose is to ensure that the requested data row truly belongs to the authenticated user.
+
+Mechanism and Database Relationships
+This verification is implemented using the database schema relationships:
+
+The user table contains a foreign key that references the primary key (PK) of the soldiers table. The soldiers table, in turn, contains a foreign key that references the primary key of the unit table. Through this chain of relationships, the system can determine with complete certainty which unit a given user belongs to. Whenever a user attempts to update data, the application performs a check to ensure that the requested record (e.g., from the soldiers, services, or any related table) belongs to the same unit as the authenticated user. This is done by verifying that the unit ID in the target record matches the unit ID of the user making the request.
+
+Purpose of the Extra Validation
+Although the JWT token validation alone should be sufficient for authentication, implementing this extra ownership check follows security best practices. It protects against potential edge cases such as: Token compromise — if the private key used to sign JWTs is ever stolen, an attacker could generate a valid token and gain unauthorized access. Future code changes — modifications by other developers could unintentionally weaken or bypass token integrity checks. By adding this validation step, the system ensures that even in such scenarios, users cannot access or modify data outside their own unit.
