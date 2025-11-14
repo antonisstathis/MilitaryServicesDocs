@@ -20,3 +20,12 @@ username: gfotiou, password: test123 (roles: soldier,commander) - (This user onl
 The user that has the role of commander too can add or delete services from the unit.
 
 You can produce a new password for each user with the bcrypt algorithm and update the corresponding row in the user table.
+
+If you wish to test the algorithm with a dataset of 1,000 soldiers (870 armed and 130 unarmed) and 500 services (340 armed and 160 unarmed), you may run the 1000soldiers_500services.sql script in your database.
+Please use the following credentials:
+
+Username: kkavafis
+
+Password: test123
+
+For a problem of this size, the algorithm typically completes in approximately 50 milliseconds.
