@@ -28,4 +28,4 @@ Username: kkavafis
 
 Password: test123
 
-For a problem of this size, the algorithm typically completes in approximately 50 milliseconds.
+For a problem of this size, the algorithm typically completes in approximately 50 millisecondsb (calculateServicesForAllGroups method).
