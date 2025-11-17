@@ -28,10 +28,9 @@ Username: kkavafis
 
 Password: test123
 
-For a problem of this size, the algorithm typically completes in approximately 3 seconds (calculateServicesForAllGroups method) as the interaction
-with the database costs a lot.
-The query orders them too in ascending order and the entries are 1000 per day. So in 100 days the total entries are 10^5.
-This query is called thousand times and it is needed to ensure a uniform distribution for each separate service.
+For a problem of this size, the interaction with the database costs a lot.
+This query is called 500 times and it is needed to ensure a uniform distribution for each separate service. After some days
+the delay is significant. It demands a better solution here if exists.
 
 However the first steps cost only 50 milliseconds, so if we relax this requirement of uniform distribution for each service seperately
 then the results are calculated in only 50 milliseconds ensuring equal distribution of armed, unarmed and free of duty days as shown 
