@@ -35,4 +35,4 @@ query and save them in a Map. So it will avoid to run 500 single queries.
 
 However the first steps cost only 50 milliseconds, so if we relax this requirement of uniform distribution for each service seperately
 then the results are calculated in only 50 milliseconds ensuring equal distribution of armed, unarmed and free of duty days as shown 
-in the Statistical data component. Just comment the steo 4 for this size of problem.
+in the Statistical data component. The step 4 is commented out until the single query is written and all these 500 calls are avoided.
