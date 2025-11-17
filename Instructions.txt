@@ -34,4 +34,4 @@ the delay is significant. It demands a better solution here if exists.
 
 However the first steps cost only 50 milliseconds, so if we relax this requirement of uniform distribution for each service seperately
 then the results are calculated in only 50 milliseconds ensuring equal distribution of armed, unarmed and free of duty days as shown 
-in the Statistical data component.
+in the Statistical data component. Just comment the steo 4 for this size of problem.
