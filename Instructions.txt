@@ -28,4 +28,5 @@ Username: kkavafis
 
 Password: test123
 
-For a problem of this size, the algorithm typically completes in approximately 50 millisecondsb (calculateServicesForAllGroups method).
+For a problem of this size, the algorithm typically completes in approximately 3 seconds (calculateServicesForAllGroups method) as the interaction
+with the database costs a lot. It is needed to ensure a uniform distribution in each service. The first steps costs only 50 milliseconds.
