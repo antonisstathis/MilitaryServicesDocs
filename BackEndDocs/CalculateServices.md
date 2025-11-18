@@ -82,7 +82,7 @@ Therefore, the first subproblem to solve is determining which soldiers will be f
 Once this is resolved, the remaining soldiers—whose count will match the number of available services—can then be assigned services accordingly.
 
 
-    The setFreeAndOutgoingSoldiers method just check which of them are set to free of duty due to illness or anything and will not be included
+    The excludeUnavailablePersonnel method just check which of them are set to free of duty due to illness or anything and will not be included
 in the calculation. This block removes them from the sets in case they are set to free of duty for a specific reason from the user. There is a 
 component that does so. 
 
