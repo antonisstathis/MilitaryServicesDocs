@@ -195,10 +195,6 @@ Service-level fairness:
 Soldiers receive each specific service type at approximately the same frequency, within the ±1 bounds inherent to non-integer averages.
 This final uniformity step ensures that the daily schedule is not only compliant with all constraints and fairness metrics but also resistant to long-term imbalance that could otherwise emerge when multiple service types exist within each category.
 
-Functionality
-This method iterates through the list of armed soldiers, and for each one, it randomly selects an available armed service and assigns it to that soldier.
-This ensures that all armed services are properly distributed among qualified personnel, completing the service allocation process.
-
 Finalization
 After assigning the armed services, the algorithm proceeds to finalize the calculation by: Setting the date of the new calculation (the date corresponding to the next day).
 Setting the unit associated with this calculation to ensure correct data linkage and consistency. Once these steps are completed, the method returns the updated allSoldiers 
