@@ -196,6 +196,6 @@ Soldiers receive each specific service type at approximately the same frequency,
 This final uniformity step ensures that the daily schedule is not only compliant with all constraints and fairness metrics but also resistant to long-term imbalance that could otherwise emerge when multiple service types exist within each category.
 
 Finalization
-After assigning the armed services, the algorithm proceeds to finalize the calculation by: Setting the date of the new calculation (the date corresponding to the next day).
+After assigning the services, the algorithm proceeds to finalize the calculation by: Setting the date of the new calculation (the date corresponding to the next day).
 Setting the unit associated with this calculation to ensure correct data linkage and consistency. Once these steps are completed, the method returns the updated allSoldiers 
 data structure, which now contains the full set of service assignments for the next day.
