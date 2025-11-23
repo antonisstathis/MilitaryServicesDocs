@@ -153,6 +153,48 @@ in the service distribution.
     The calculateServicesForArmedSoldiers Method
 The calculateServicesForArmedSoldiers method addresses the final subproblem in the service assignment process — assigning armed services to armed soldiers.
 
+The ensureAllServicesAreUniform Method
+Up to this point in the algorithm (Steps 1–3), the system has determined:
+Which soldiers will receive armed services
+Which soldiers will receive unarmed services
+Which soldiers will be free of duty
+
+While these steps ensure that the categories of services are balanced (armed, unarmed, or free-duty), they do not yet guarantee an equal distribution of the specific types of armed and unarmed services that exist within each category.
+
+In many units, the “armed services” category may include multiple distinct service types (e.g., guard duty, night watch, perimeter control), and the same applies to unarmed services. Without additional logic, some soldiers could repeatedly receive the same specific service type more often than others, even if their total number of armed/unarmed assignments remains balanced.
+
+Purpose of the Method
+The ensureAllServicesAreUniform method ensures that the frequency of each specific service type is distributed as evenly as possible across all soldiers.
+
+This step is essential for two reasons:
+Long-term fairness:
+Over hundreds of days, the cumulative frequency of each specific service should approach the same value for soldiers within the same category.
+
+Multi-service categories:
+When a category contains multiple service types, uniformity prevents bias toward or against specific tasks, especially tasks considered more demanding or less desirable.
+
+Functionality
+Once soldiers have been categorized into armed, unarmed, or free of duty in previous steps, this method performs the following operations:
+
+Retrieves historical frequency data for each specific service type per soldier.
+This allows the algorithm to identify which soldiers have performed each service more or less frequently.
+Iterates over the assigned services for the next day and determines the exact service type each soldier should receive.
+Selects the appropriate service instance (armed or unarmed) so that the cumulative count of each service type remains in balance across all soldiers who can perform that category of service.
+
+Assigns each soldier the specific service that:
+they are eligible to perform (armed or unarmed), and
+minimizes deviation from the expected uniform frequency.
+
+Outcome
+After the ensureAllServicesAreUniform method completes, the assignment distribution satisfies two complementary fairness criteria:
+
+Category-level fairness:
+Soldiers receive approximately the same number of armed, unarmed, and free-duty days overall.
+
+Service-level fairness:
+Soldiers receive each specific service type at approximately the same frequency, within the ±1 bounds inherent to non-integer averages.
+This final uniformity step ensures that the daily schedule is not only compliant with all constraints and fairness metrics but also resistant to long-term imbalance that could otherwise emerge when multiple service types exist within each category.
+
 Functionality
 This method iterates through the list of armed soldiers, and for each one, it randomly selects an available armed service and assigns it to that soldier.
 This ensures that all armed services are properly distributed among qualified personnel, completing the service allocation process.
