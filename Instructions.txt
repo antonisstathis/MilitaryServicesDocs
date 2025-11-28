@@ -27,8 +27,10 @@ for 1000 soldiers and 500 services).
 If you wish to test the algorithm with a dataset of 1,000 soldiers (870 armed and 130 unarmed) and 500 services (340 armed and 160 unarmed), 
 you may run the scenario 4 in your database.
 You will find a scenarios.zip file. You can download it to access the output data for 365 days for each scenario, provided as individual CSV files.
-To reproduce any scenario, please run the scenario.sql file first. After that, right-click the services table, choose Import Data, and select the corresponding CSV file. The services table contains the calculated services for each day, while the CSV files include the results after the full 365-day period.
-The tester may also run a GROUP BY query to check how many times each soldier has been assigned a specific service. For example, the following query counts the number of assignments per soldier for a chosen service.
+To reproduce any scenario, please run the scenario.sql file first. After that, right-click the services table, choose Import Data, and select the 
+corresponding CSV file. The services table contains the calculated services for each day, while the CSV files include the results after the full 365-day period.
+The tester may also run a GROUP BY query to check how many times each soldier has been assigned a specific service. For example, the following query counts the 
+number of assignments per soldier for a chosen service.
 
 SELECT
     sold_id,
