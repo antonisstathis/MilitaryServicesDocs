@@ -1,0 +1,47 @@
+[ ca ]
+default_ca = CA_default
+
+[ CA_default ]
+dir               = .                    # top of root-ca directory
+certs             = $dir/certs
+crl_dir           = $dir/crl
+new_certs_dir     = $dir/newcerts
+database          = $dir/index.txt
+serial            = $dir/serial
+RANDFILE          = $dir/private/.rand
+
+private_key       = $dir/private/root-ca.key
+certificate       = $dir/certs/root-ca.crt
+
+default_md        = sha256
+default_days      = 3650
+preserve          = no
+policy            = policy_strict
+x509_extensions   = v3_ca
+
+[ policy_strict ]
+countryName             = optional
+stateOrProvinceName     = optional
+localityName            = optional
+organizationName        = supplied
+organizationalUnitName  = optional
+commonName              = supplied
+
+[ req ]
+default_bits        = 4096
+default_md          = sha256
+prompt              = no
+distinguished_name  = dn
+x509_extensions     = v3_ca
+
+[ dn ]
+C  = GR
+O  = GreekArmy
+CN = GreekArmy Root CA
+
+[ v3_ca ]
+basicConstraints = critical,CA:TRUE,pathlen:1
+keyUsage = critical,keyCertSign,cRLSign
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+
