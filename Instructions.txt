@@ -22,7 +22,10 @@ The user that has the role of commander too can add or delete services from the 
 You can produce a new password for each user with the bcrypt algorithm and update the corresponding row in the user table.
 Soon i will have a desktop app so that the tester can create users from there and select which scenario wants to run (avoiding
 the connection with the database container in order to paste the queries and avoiding creating data using the forms as it is not easy
-for 1000 soldiers and 500 services). 
+for 1000 soldiers and 500 services). In addition to using the desktop application, each tester will need to download the pki-template 
+directory in order to simulate a Certificate Authority (CA). This is required because an mTLS client certificate is mandatory for user 
+signup and for accessing the application. The provided template allows testers to create and manage their own certificates in a controlled, 
+fully self-contained environment.
 
 If you wish to test the algorithm with a dataset of 1,000 soldiers (870 armed and 130 unarmed) and 500 services (340 armed and 160 unarmed), 
 you may run the scenario 4 in your database.
