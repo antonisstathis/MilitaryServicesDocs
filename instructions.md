@@ -42,5 +42,5 @@ If you wish to test the algorithm with a dataset of 1,000 soldiers (870 armed an
 you may run the scenario 4 in your database.
 
 You will find a scenarios.zip file. You can download it to access the output data for 365 days for each scenario, provided as individual CSV files.  
-To reproduce any scenario, please run the scenario.sql file first(steps 7,8).
+To reproduce any scenario, please run the scenario.sql file first(steps 8,9).
 
