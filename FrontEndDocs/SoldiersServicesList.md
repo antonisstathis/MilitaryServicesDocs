@@ -83,7 +83,6 @@ If it’s the latest calculation → calls fetchSoldiers.
 
 If it’s a previous calculation → calls fetchPrevCalculationData.
 
-
 5. Viewing Previous Calculations
 
 This feature is triggered when a previously selected date is chosen using the HTML input date element, allowing the user to view earlier calculation results.
