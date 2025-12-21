@@ -66,6 +66,7 @@ The method calls router.push('/servicesOfUnit'), navigating to the ServicesOfUni
 This component and its functionality are documented in the ServicesOfUnit.md file.
 
 3. Load personnel or soldiers using the dual toggle button.
+
 4. Changing the Language
 
 When the user changes the language using the <select> element:
@@ -81,6 +82,7 @@ Depending on whether the user is viewing the latest or a previous calculation:
 If it’s the latest calculation → calls fetchSoldiers.
 
 If it’s a previous calculation → calls fetchPrevCalculationData.
+
 
 5. Viewing Previous Calculations
 
