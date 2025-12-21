@@ -23,6 +23,11 @@ fetchSoldiers
 
 Sends a GET request to retrieve the latest soldier data — the soldiers currently serving in the unit and their most recent assigned services.
 
+This method is invoked twice: once to retrieve the soldiers data and once to retrieve the personnel data. It returns the results in two separate data structures 
+(the soldiers list and the personnel list). The isPersonnel parameter is used to distinguish between these two cases. The user’s current selection is stored in 
+local storage under the key "personnel". Additionally, a <div> element (dual-toggle) is provided to allow the user to switch between loading the soldiers list or 
+the personnel list in the main table.
+
 Calls fetchTableTitles("lastcalc") to retrieve the table column headers for the latest calculation.
 The column titles differ when displaying past calculations (where two additional columns appear).
 
