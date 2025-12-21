@@ -45,7 +45,7 @@ Loads localized UI labels from JSON files located in the locales directory.
 Selects the correct language file based on the currently selected language.
 
 User Interactions
-1. Generating New Services
+### 1. Generating New Services
 
 When the user clicks the “New Services” button:
 
@@ -57,7 +57,7 @@ The isPersonnel parameter is sent to the server to determine whether the service
 
 Based on this parameter, the selected option is then loaded into the main table.
 
-2. Viewing All Services of the Unit
+### 2. Viewing All Services of the Unit
 
 Clicking the “Services of Unit” button triggers the navigateTo method via the @change event.
 
@@ -65,8 +65,8 @@ The method calls router.push('/servicesOfUnit'), navigating to the ServicesOfUni
 
 This component and its functionality are documented in the ServicesOfUnit.md file.
 
-3. Load personnel or soldiers using the dual toggle button.
-4. Changing the Language
+### 3. Load personnel or soldiers using the dual toggle button.
+### 4. Changing the Language
 
 When the user changes the language using the <select> element:
 
@@ -82,7 +82,7 @@ If it’s the latest calculation → calls fetchSoldiers.
 
 If it’s a previous calculation → calls fetchPrevCalculationData.
 
-5. Viewing Previous Calculations
+### 5. Viewing Previous Calculations
 
 This feature is triggered when a previously selected date is chosen using the HTML input date element, allowing the user to view earlier calculation results.
 
@@ -114,12 +114,12 @@ Fetches data from the getPreviousCalculation endpoint.
 
 Calls setTableDataBasedOnLang to apply localization before rendering the updated table dynamically using v-for.
 
-6. Returning to the Last Calculation
+### 6. Returning to the Last Calculation
 
 Clicking the “Last Services” button triggers fetchSoldiers again, refreshing the table with the most recent calculation.
 This provides a shortcut so users don’t have to manually select the last date in the date picker.
 
-7. Updating a Soldier’s Data
+### 7. Updating a Soldier’s Data
 
 Clicking on a table row opens the SoldierForm.vue component, allowing the user to update a soldier’s:
 
@@ -153,12 +153,12 @@ The backend (Spring Boot) runs on a Tomcat application server, providing data vi
 
 Both run on separate ports (commonly configured via Docker).
 
-8. Search entries
+### 8. Search entries
 
 The user can search entries using the HTML search input element. Searches may be performed by entering a name, surname, or service name.
 Additionally, the keywords “armed” and “unarmed” can be used to filter the results and display only armed or only unarmed soldiers or personnel.
 
-9. Logging Out
+### 9. Logging Out
 
 When the “Logout” button is clicked:
 
