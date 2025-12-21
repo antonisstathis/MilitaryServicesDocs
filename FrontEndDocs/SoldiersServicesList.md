@@ -23,9 +23,9 @@ fetchSoldiers
 
 Sends a GET request to retrieve the latest soldier data — the soldiers currently serving in the unit and their most recent assigned services.
 
-This method is invoked twice: once to retrieve the soldiers data and once to retrieve the personnel data. It returns the results in two separate data structures 
-(the soldiers list and the personnel list). The isPersonnel parameter is used to distinguish between these two cases. The user’s current selection is stored in 
-local storage under the key "personnel". Additionally, a <div> element (dual-toggle) is provided to allow the user to switch between loading the soldiers list or 
+This method is invoked twice: once to retrieve the soldiers data and once to retrieve the personnel data. It returns the results in two separate data structures
+(the soldiers list and the personnel list). The isPersonnel parameter is used to distinguish between these two cases. The user’s current selection is stored in
+local storage under the key "personnel". Additionally, a <div> element (dual-toggle) is provided to allow the user to switch between loading the soldiers list or
 the personnel list in the main table.
 
 Calls fetchTableTitles("lastcalc") to retrieve the table column headers for the latest calculation.
@@ -53,7 +53,7 @@ The newServices method sends a GET request to the backend’s /calc endpoint to 
 
 Once the new data is generated, it re-invokes fetchSoldiers to display the updated table with the newly calculated services.
 
-The isPersonnel parameter is sent to the server to determine whether the service should be triggered for personnel or for soldiers. 
+The isPersonnel parameter is sent to the server to determine whether the service should be triggered for personnel or for soldiers.
 
 Based on this parameter, the selected option is then loaded into the main table.
 
@@ -66,7 +66,6 @@ The method calls router.push('/servicesOfUnit'), navigating to the ServicesOfUni
 This component and its functionality are documented in the ServicesOfUnit.md file.
 
 3. Load personnel or soldiers using the dual toggle button.
-
 4. Changing the Language
 
 When the user changes the language using the <select> element:
@@ -149,14 +148,13 @@ The data is stored in local storage for retrieval by the SoldierForm.vue compone
 The router navigates to /soldierForm via router.push().
 
 The frontend is served by an Nginx server (Vue CLI app).
-
 The backend (Spring Boot) runs on a Tomcat application server, providing data via a REST API.
 
 Both run on separate ports (commonly configured via Docker).
 
 8. Search entries
 
-The user can search entries using the HTML search input element. Searches may be performed by entering a name, surname, or service name. 
+The user can search entries using the HTML search input element. Searches may be performed by entering a name, surname, or service name.
 Additionally, the keywords “armed” and “unarmed” can be used to filter the results and display only armed or only unarmed soldiers or personnel.
 
 10. Logging Out
@@ -178,6 +176,7 @@ The JWT token, added globally via an Axios interceptor (defined on line 25 of ma
 The base backend URL, set globally on line 18 of main.js.
 
 This eliminates the need to manually include the token or base URL in individual requests.
+
 The default backend URL is:
 
 http://localhost:8080/
