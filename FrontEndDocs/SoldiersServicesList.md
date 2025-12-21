@@ -53,6 +53,10 @@ The newServices method sends a GET request to the backend’s /calc endpoint to 
 
 Once the new data is generated, it re-invokes fetchSoldiers to display the updated table with the newly calculated services.
 
+The isPersonnel parameter is sent to the server to determine whether the service should be triggered for personnel or for soldiers. 
+
+Based on this parameter, the selected option is then loaded into the main table.
+
 2. Viewing All Services of the Unit
 
 Clicking the “Services of Unit” button triggers the navigateTo method via the @change event.
