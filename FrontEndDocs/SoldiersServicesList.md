@@ -66,7 +66,6 @@ The method calls router.push('/servicesOfUnit'), navigating to the ServicesOfUni
 This component and its functionality are documented in the ServicesOfUnit.md file.
 
 3. Load personnel or soldiers using the dual toggle button.
-
 4. Changing the Language
 
 When the user changes the language using the <select> element:
@@ -149,6 +148,7 @@ The data is stored in local storage for retrieval by the SoldierForm.vue compone
 The router navigates to /soldierForm via router.push().
 
 The frontend is served by an Nginx server (Vue CLI app).
+
 The backend (Spring Boot) runs on a Tomcat application server, providing data via a REST API.
 
 Both run on separate ports (commonly configured via Docker).
