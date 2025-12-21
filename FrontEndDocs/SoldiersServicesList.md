@@ -154,7 +154,12 @@ The backend (Spring Boot) runs on a Tomcat application server, providing data vi
 
 Both run on separate ports (commonly configured via Docker).
 
-8. Logging Out
+8. Search entries
+
+The user can search entries using the HTML search input element. Searches may be performed by entering a name, surname, or service name. 
+Additionally, the keywords “armed” and “unarmed” can be used to filter the results and display only armed or only unarmed soldiers or personnel.
+
+10. Logging Out
 
 When the “Logout” button is clicked:
 
