@@ -65,7 +65,9 @@ The method calls router.push('/servicesOfUnit'), navigating to the ServicesOfUni
 
 This component and its functionality are documented in the ServicesOfUnit.md file.
 
-3. Changing the Language
+3. Load personnel or soldiers using the dual toggle button.
+
+4. Changing the Language
 
 When the user changes the language using the <select> element:
 
@@ -81,7 +83,21 @@ If it’s the latest calculation → calls fetchSoldiers.
 
 If it’s a previous calculation → calls fetchPrevCalculationData.
 
-4. Viewing Previous Calculations
+5. Viewing Previous Calculations
+
+This feature is triggered when a previously selected date is chosen using the HTML input date element, allowing the user to view earlier calculation results.
+
+When the user selects a date in the <input type="date"> field:
+
+The v-model updates selectedDate.
+
+The fetchPrevCalculation method is triggered via the @change shorthand.
+
+It checks whether the date is within the valid range (between the first and last calculation dates).
+
+If invalid, a red global popup appears for 3.3 seconds (via the show method), and execution stops.
+
+If valid, the method calls changeLanguage to refresh the table data and labels appropriately.
 
 The fetchPrevCalculationData method:
 
@@ -99,36 +115,28 @@ Fetches data from the getPreviousCalculation endpoint.
 
 Calls setTableDataBasedOnLang to apply localization before rendering the updated table dynamically using v-for.
 
-When the user selects a date in the <input type="date"> field:
-
-The v-model updates selectedDate.
-
-The fetchPrevCalculation method is triggered via the @change shorthand.
-
-It checks whether the date is within the valid range (between the first and last calculation dates).
-
-If invalid, a red global popup appears for 3.3 seconds (via the show method), and execution stops.
-
-If valid, the method calls changeLanguage to refresh the table data and labels appropriately.
-
-5. Returning to the Last Calculation
+6. Returning to the Last Calculation
 
 Clicking the “Last Services” button triggers fetchSoldiers again, refreshing the table with the most recent calculation.
 This provides a shortcut so users don’t have to manually select the last date in the date picker.
 
-6. Updating a Soldier’s Data
+7. Updating a Soldier’s Data
 
 Clicking on a table row opens the SoldierForm.vue component, allowing the user to update a soldier’s:
 
-Situation (e.g., Armed → Unarmed), or
+Situation (e.g., Armed → Unarmed),
 
-Active status (e.g., Active → Free of Duty).
+Active status (e.g., Active → Free of Duty),
+
+Group (e.g. A or B)
 
 Depending on these changes:
 
 Soldiers marked Unarmed will only be assigned unarmed services in subsequent calculations.
 
 Soldiers marked Free of Duty are excluded from calculations until reactivated.
+
+Services of group A are assigned only to soldiers of group A etc.
 
 This process works as follows:
 
@@ -146,7 +154,7 @@ The backend (Spring Boot) runs on a Tomcat application server, providing data vi
 
 Both run on separate ports (commonly configured via Docker).
 
-7. Logging Out
+8. Logging Out
 
 When the “Logout” button is clicked:
 
