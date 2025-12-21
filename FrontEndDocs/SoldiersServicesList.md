@@ -81,6 +81,7 @@ Depending on whether the user is viewing the latest or a previous calculation:
 If it’s the latest calculation → calls fetchSoldiers.
 
 If it’s a previous calculation → calls fetchPrevCalculationData.
+<!-- -->
 
 ### 5. Viewing previous calculations
 
