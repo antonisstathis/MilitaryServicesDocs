@@ -44,3 +44,12 @@ you may run the scenario 4 in your database.
 You will find a scenarios.zip file. You can download it to access the output data for 365 days for each scenario, provided as individual CSV files.  
 To reproduce any scenario, please run the scenario.sql file first(steps 8,9).
 
+To verify the fairness properties of the algorithm, consult the Queries.sql file and execute the SQL queries listed therein. These queries allow independent confirmation of:
+
+assignment coverage,
+
+eligibility constraint enforcement,
+
+workload and fatigue distribution,
+
+and per-service assignment fairness.
