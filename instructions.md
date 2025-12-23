@@ -39,7 +39,7 @@ the connection with the database container in order to paste the queries and avo
 for 1000 soldiers and 500 services).
 
 If you wish to test the algorithm with a dataset of 1,000 soldiers (870 armed and 130 unarmed) and 500 services (340 armed and 160 unarmed),  
-you may run the scenario 4 in your database.
+you may run the scenario 3 in your database.
 
 You will find a scenarios.zip file. You can download it to access the output data for 365 days for each scenario, provided as individual CSV files.  
 To reproduce any scenario, please run the scenario.sql file first(steps 8,9).
