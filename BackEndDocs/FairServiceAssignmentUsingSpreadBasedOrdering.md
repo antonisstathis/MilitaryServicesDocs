@@ -1,4 +1,4 @@
-The role of getServiceSpread method.
+The role of getServicesOrderedBySpread method.
 
 Fair Service Assignment Using Spread-Based Ordering
 Overview
