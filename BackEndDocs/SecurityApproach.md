@@ -3,11 +3,13 @@ In my application architecture, security is grounded in a simple but powerful pr
 is trusted; all other data is untrusted and rigorously sanitized. This strict separation between identity and data ensures that attacks 
 based on input manipulation, multipart request tampering, or boundary-prediction weaknesses do not undermine the integrity of authorization 
 or application logic.
+
 At the core of this design is the use of JWTs (JSON Web Tokens) signed with a private key. Every incoming request includes a token, and the 
 application first verifies the token’s signature before using any of its contents. From the verified JWT, the application extracts only one 
 trusted attribute: the user ID. No other claims or request fields are implicitly trusted. By limiting trust to the signed user ID, the system 
 guarantees that identity cannot be forged or altered without possession of the signing key. This isolates authentication from all other 
 application input.
+
 Once the user is authenticated, all subsequent data handling follows a defensive model. Every piece of data other than the user ID is treated 
 as untrusted, regardless of where it originates—request bodies, multipart form submissions, query strings, headers, or files. This assumes that 
 any client may be malicious or compromised and deliberately sending malformed or adversarial input. To enforce this assumption, all non-identity 
@@ -19,6 +21,7 @@ no practical advantage: injected fields remain untrusted, are sanitized, and are
 not rely on hidden or server-generated multipart fields to enforce security decisions, nor does it assume that the request body has any inherent integrity. 
 Because business logic and permissions depend exclusively on the cryptographically verified user ID, manipulating multipart data does not grant additional 
 privileges or alter identity.
+
 Furthermore, data retrieval from the database is tightly coupled to the verified identity. After validating the JWT, the application queries database 
 records associated with that user ID, ensuring that users can act only on their own resources. Even data loaded from storage is subsequently passed 
 through the same sanitization processes as incoming data, reinforcing the rule that trust is narrowly scoped and explicit rather than assumed.
