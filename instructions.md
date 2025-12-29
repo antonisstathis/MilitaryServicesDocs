@@ -6,9 +6,9 @@
 3. **Make a directory named `certs` in the `MilitaryServicesFrontend` and use the Desktop app (https://github.com/antonisstathis/MilitaryCADesktop)**  
    to produce certificates (as it runs https).  
    Run the Desktop app and then copy all 3 files of the directory `desktop/pki/output/server` and paste them in the `MilitaryServicesFrontend/certs` directory.
-   In addition install these two files and select always trust as described in the instructions.txt file of the MilitaryCADesktop: 
-   Desktop/pki/root-ca/certs/root-ca.crt
-   Desktop/pki/output/clients/<username>.p12
+   Then install the following two files and select “Always Trust,” as outlined in the instructions.txt file for MilitaryCADesktop:
+• Desktop/pki/root-ca/certs/root-ca.crt
+• Desktop/pki/output/clients/<username>.p12
 
 5. **Install Docker Desktop and open it.**
 
