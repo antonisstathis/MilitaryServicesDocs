@@ -38,8 +38,8 @@ the forms.
 
 The user that has the role of commander too can define the services of the unit using the appropriate page.  
 Soon i will have a desktop app so that the tester will be able to select which scenario wants to run (avoiding  
-the connection with the database container in order to paste the queries and avoiding creating data using the forms as it is not easy  
-for 1000 soldiers and 500 services).
+the connection with the database container in order to paste the queries and avoiding creating data using the 
+forms as it is not easy for 1000 soldiers and 500 services).
 
 If you wish to test the algorithm with a dataset of 1,000 soldiers (870 armed and 130 unarmed) and 500 services (340 armed and 160 unarmed),  
 you may run the scenario 3 in your database.
