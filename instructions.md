@@ -5,20 +5,24 @@
 
 3. **Make a directory named `certs` in the `MilitaryServicesFrontend` and use the Desktop app (https://github.com/antonisstathis/MilitaryCADesktop)**  
    to produce certificates (as it runs https).  
-   Copy all 3 files of the directory `desktop/pki/output/server` and paste them in the `MilitaryServicesFrontend/certs` directory.
+   Run the Desktop app and then copy all 3 files of the directory `desktop/pki/output/server` and paste them in the
+   `MilitaryServicesFrontend/certs` directory.
+   In addition install these two files and select always trust as described in the instructions.txt file of the MilitaryCADesktop: 
+   Desktop/pki/root-ca/certs/root-ca.crt
+   Desktop/pki/output/clients/<username>.p12
 
-4. **Install Docker Desktop and open it.**
+5. **Install Docker Desktop and open it.**
 
-5. **Click terminal in docker.desktop app and cd to the `MilitaryServices` directory** that contain the `MilitaryServicesFrontend`,the `MilitaryServicesBackend`  
+6. **Click terminal in docker.desktop app and cd to the `MilitaryServices` directory** that contain the `MilitaryServicesFrontend`,the `MilitaryServicesBackend`  
    and the `docker-compose.yml` file.
 
-6. **Run the following command in the terminal to build and start the three containers:**
+7. **Run the following command in the terminal to build and start the three containers:**
 
    ```bash
    docker-compose up --build
    ```
 
-7. **Use the url:** https://localhost and select the corresponding certificate that the browser will throw for the mTLS handshake.  
+8. **Use the url:** https://localhost and select the corresponding certificate that the browser will throw for the mTLS handshake.  
    When the login page is loaded click the create an account button to sign up. There is no select html element in order to select  
    a role there. The role is included in the certificate you already selected (popup window) and assigned in the pki office for security reasons.
 
