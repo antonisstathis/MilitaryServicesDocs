@@ -26,7 +26,7 @@
    a role there. The role and the username are included in the certificate you already selected (popup window) and assigned in the
    pki office for security reasons.
 
-Run steps 8,9 in case you want to use one of the 4 ready scenarios as it is not easy to insert 1000 soldiers and 500 services using  
+Run steps 8,9 in case you want to use one of the 3 ready scenarios as it is not easy to insert 1000 soldiers and 500 services using  
 the forms.
 
 8. **After the containers have started run the following command in the terminal to connect to the container db with the ms schema:**
