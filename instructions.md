@@ -45,7 +45,7 @@ If you wish to test the algorithm with a dataset of 1,000 soldiers (870 armed an
 you may run the scenario 3 in your database.
 
 You will find a scenarios.zip file. You can download it to access the output data for 365 days for each scenario, provided as individual CSV files.  
-To reproduce any scenario, please run the scenario.sql file first(steps 8,9).
+To reproduce any scenario, please run the scenarioX.sql file first(steps 8,9).
 
 To verify the fairness properties of the algorithm, consult the Queries.sql file and execute the SQL queries listed therein. These queries allow 
 independent confirmation of:
