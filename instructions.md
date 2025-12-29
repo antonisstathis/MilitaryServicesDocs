@@ -35,7 +35,7 @@ the forms.
    docker exec -it db psql -U postgres -d militaryServices
    ```
 
-9. **Run the insert queries of the `scenario.sql` file.** Just copy them all and paste them in the command line and click enter.
+9. **Run the insert queries of the `scenarioX.sql` file.** Just copy them all and paste them in the command line and click enter.
 
 The user that has the role of commander too can define the services of the unit using the appropriate page.  Soon i will have a desktop 
 app so that the tester will be able to select which scenario wants to run (avoiding the connection with the database container in order 
