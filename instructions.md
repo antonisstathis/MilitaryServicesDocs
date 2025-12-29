@@ -23,7 +23,8 @@
 
 8. **Use the url:** https://localhost and select the corresponding certificate that the browser will throw for the mTLS handshake.  
    When the login page is loaded click the create an account button to sign up. There is no select html element in order to select  
-   a role there. The role is included in the certificate you already selected (popup window) and assigned in the pki office for security reasons.
+   a role there. The role and the username are included in the certificate you already selected (popup window) and assigned in the
+   pki office for security reasons.
 
 Run steps 8,9 in case you want to use one of the 4 ready scenarios as it is not easy to insert 1000 soldiers and 500 services using  
 the forms.
@@ -36,18 +37,18 @@ the forms.
 
 9. **Run the insert queries of the `scenario.sql` file.** Just copy them all and paste them in the command line and click enter.
 
-The user that has the role of commander too can define the services of the unit using the appropriate page.  
-Soon i will have a desktop app so that the tester will be able to select which scenario wants to run (avoiding  
-the connection with the database container in order to paste the queries and avoiding creating data using the 
-forms as it is not easy for 1000 soldiers and 500 services).
+The user that has the role of commander too can define the services of the unit using the appropriate page.  Soon i will have a desktop 
+app so that the tester will be able to select which scenario wants to run (avoiding the connection with the database container in order 
+to paste the queries and avoiding creating data using the forms as it is not easy for 1000 soldiers and 500 services).
 
-If you wish to test the algorithm with a dataset of 1,000 soldiers (870 armed and 130 unarmed) and 500 services (340 armed and 160 unarmed),  
+If you wish to test the algorithm with a dataset of 1,000 soldiers (870 armed and 130 unarmed) and 500 services (340 armed and 160 unarmed), 
 you may run the scenario 3 in your database.
 
 You will find a scenarios.zip file. You can download it to access the output data for 365 days for each scenario, provided as individual CSV files.  
 To reproduce any scenario, please run the scenario.sql file first(steps 8,9).
 
-To verify the fairness properties of the algorithm, consult the Queries.sql file and execute the SQL queries listed therein. These queries allow independent confirmation of:
+To verify the fairness properties of the algorithm, consult the Queries.sql file and execute the SQL queries listed therein. These queries allow 
+independent confirmation of:
 
 assignment coverage,
 
